@@ -33,3 +33,7 @@ A custom AMI is created with the help of Packer.
 CloudFormation is used to deploy the application.   
 
 ![MISSING IMAGE](Imagery.drawio.png)
+
+![MISSING IMAGE](application-composer-template.yml.png)
+
+
