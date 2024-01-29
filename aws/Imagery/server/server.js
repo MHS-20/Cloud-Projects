@@ -4,7 +4,6 @@ const AWS = require('aws-sdk');
 const { v4: uuidv4 } = require('uuid'); // create universally unique ids
 const multiparty = require('multiparty'); // parse images
 
-// AWS services
 const db = new AWS.DynamoDB({});
 const sqs = new AWS.SQS({});
 const s3 = new AWS.S3({});
@@ -32,7 +31,7 @@ mapImage = function(item) {
     };
   };
 
-// Retive and convert image
+// Retrive and convert image
 function getImage (id, callback) {
     db.getItem({
         'Key': { 'id': { 'S': id } },
@@ -76,6 +75,7 @@ function uploadImage(image, part, response){
                   ':newState': {
                     'S': 'uploaded'
                   },
+                // concurrency requirement
                   ':oldVersion': {
                     'N': image.version.toString()
                   },

@@ -29,4 +29,7 @@ The worker runs through the following steps in an endless loop:
 6. Update the process state in the database.
 7. Mark the message as done by deleting it from the queue.
 
+A custom AMI is created with the help of Packer. 
+CloudFormation is used to deploy the application.   
+
 ![MISSING IMAGE](Imagery.drawio.png)
