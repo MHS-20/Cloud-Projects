@@ -20,4 +20,4 @@ The web server is implemented with the Express framework. The REST API will supp
 * GET /image/:id — This route returns the state of the process specified with the path parameter.
 * POST /image/:id/upload — This route offers a file upload for the process specified with the path parameter.
 
-![error](aws/Imagery/Imagery.drawio.png)
+![error](Imagery.drawio.png)
