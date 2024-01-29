@@ -20,5 +20,13 @@ The web server is implemented with the Express framework. The REST API will supp
 * GET /image/:id — This route returns the state of the process specified with the path parameter.
 * POST /image/:id/upload — This route offers a file upload for the process specified with the path parameter.
 
+The worker runs through the following steps in an endless loop:
+1. Poll the queue for new messages.
+2. Fetch the process data from the database.
+3. Download the image from S3.
+4. Apply the sepia filter to the image.
+5. Upload the modified image to S3.
+6. Update the process state in the database.
+7. Mark the message as done by deleting it from the queue.
 
-![MISSING IMAGE](Imagery.drawio.svg)
+![MISSING IMAGE](Imagery.drawio.png)
