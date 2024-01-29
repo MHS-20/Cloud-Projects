@@ -11,7 +11,7 @@ When a user wants to upload an image, the user creates a process first. This ret
 5. S3 contains the sepia image. DynamoDB knows the S3 key.
 
 
-The image's state transitions are made indempotent: (Created) -> (Uploaded) -> (Processed).
+The image's state transitions are made idempotent: (Created) -> (Uploaded) -> (Processed).
 The Imagery application is spit into two parts: the web servers and the workers. The web servers provide the REST API to the user, and the workers process images.
 
 
@@ -21,4 +21,4 @@ The web server is implemented with the Express framework. The REST API will supp
 * POST /image/:id/upload — This route offers a file upload for the process specified with the path parameter.
 
 
-![MISSING IMAGE](Imagery.drawio.html)
+![MISSING IMAGE](Imagery.drawio.svg)
