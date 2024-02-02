@@ -26,6 +26,14 @@ The platform must provide for user registration, viewing of their balance and tr
 -  Frontend
 	- react webapp
 
+## Involved Tecnologies
+- NodeJS/Express
+- GRPC
+- ReactJS
+- PostgresSQL
+- JWT/OpenAPI
+- Docker/DockerCompose
+
 ### Backend
 The backend consists of three microservices written in NodeJS, and a Postgres database.
 
@@ -47,7 +55,7 @@ The interface of this microservice is very simple and exposes only one GRPC func
 - **API**: this microservice is the only one accessible directly from the outside and must be developed using OpenApi and Express. The purpose of the API is to receive external calls and route them to the various microservices.
 
 ### Frontend
-Simple interactive web page that allows interaction with all components of the API (signup, login, purchase, sale and order viewing). This must be done in TypeScript with React.
+Simple interactive web page that allows interaction with all components of the API (signup, login, purchase, sale and order viewing). This is done with React.
 
 ### Infrastructure
-The entire application must be able to be tested locally with Docker and docker-compose.
+The entire application will be tested locally with Docker and docker-compose.
