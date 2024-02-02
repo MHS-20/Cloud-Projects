@@ -1,10 +1,38 @@
-- VPC
-- Subnet
-- Security Groups
+- Subnet (ALB?)
 
 - RDS
 - EFS
 
+- PatchManager
+- CloudWatch Alarm (?)
+
+- LoadBalancer
+- TargetGroup
+
 - AutoScaling Group
 - Collegamento WP-RDS
-- PatchManager
+
+WP SecurityGroup
+RDS SecurityGroup
+EFS SecurityGroup
+LoadBalancer SecurityGroup
+
+Devo aggiungere un IGW per l'ALB? Oppure ce l'ha in automatico?
+Perché per crearne uno dovrei fare una subnet solo per ALB.
+
+### CH6 ###
+- Creating a Lambda function to perform periodic health checks of a website
+- Triggering a Lambda function with EventBridge events to automate DevOps tasks
+
+**********
+- Teoria 
+Un security group per il load balancer, accetta dall'esterno. 
+EC2 accetta solo da altri security groups. 
+
+Le regole del security group determinano quali 
+risorse possono comunicare con la risorsa associata.
+Le subnet determinano in quale parte della VPC risiede la risorsa.
+
+Traffic between subnets of a VPC is always routed by default. You can’t remove the
+routes between the subnets. If you want to prevent traffic between subnets in a VPC,
+you need to use NACLs attached to the subnets.
