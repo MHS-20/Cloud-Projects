@@ -1,7 +1,6 @@
 - Subnet (ALB?)
 
-- RDS
-- EFS
+- EFS (mount point) 
 
 - PatchManager
 - CloudWatch Alarm (?)
@@ -12,10 +11,17 @@
 - AutoScaling Group
 - Collegamento WP-RDS
 
+SubenetA(EC2 + RDS)
+Subenetb(EC2 + EFS)
+
 WP SecurityGroup
 RDS SecurityGroup
 EFS SecurityGroup
 LoadBalancer SecurityGroup
+
+
+
+Come imposto le credenziali del DB in modo sicuro?
 
 Devo aggiungere un IGW per l'ALB? Oppure ce l'ha in automatico?
 Perché per crearne uno dovrei fare una subnet solo per ALB.
