@@ -4,13 +4,23 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: "AWS CloudFormation Template for WordPress"
 Resources:
-  ##### SUBNETS #####
+  ##### VPC #####
   WpVPC:
     Type: "AWS::EC2::VPC"
     Properties:
       CidrBlock: "10.0.0.0/16"
 
-  # EC2 AZ1
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties: {}
+  VPCGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref WpVPC
+      InternetGatewayId: !Ref InternetGateway
+
+  ##### SUBNETS #####
+  # AZ1
   SubnetA:
     Type: "AWS::EC2::Subnet"
     Properties:
@@ -18,7 +28,7 @@ Resources:
       CidrBlock: "10.0.1.0/24"
       AvailabilityZone: "us-east-1a"
 
-  # EC2 AZ2
+  # AZ2
   SubnetB:
     Type: "AWS::EC2::Subnet"
     Properties:
