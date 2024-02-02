@@ -1,0 +1,27 @@
+---
+# Non creare EC2, usa launch template dell'autoscaling group
+# Puoi definire dei parametri e poi li passi dalla CLI o dalla console
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'AWS CloudFormation Template for WordPress'
+Resources:
+  WPInstance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: 'ami-0c55b159cbfafe1f0'
+      InstanceType: 't2.micro'
+      KeyName: 'mykey'
+      SecurityGroupIds:
+        - !Ref WPSecurityGroup
+      SubnetId: !Ref WPSubnet
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash -xe
+          yum update -y
+          yum install -y httpd24 php56 mysql55-server php56-mysqlnd
+          service httpd start
+          chkconfig httpd on
+          echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
+Outputs:
+ InstanceId:
+ Value: !Ref WPInstance
+ Description: 'Instance id'

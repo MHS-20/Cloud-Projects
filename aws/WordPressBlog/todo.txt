@@ -1,0 +1,10 @@
+- VPC
+- Subnet
+- Security Groups
+
+- RDS
+- EFS
+
+- AutoScaling Group
+- Collegamento WP-RDS
+- PatchManager
