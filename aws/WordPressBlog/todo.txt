@@ -1,6 +1,5 @@
 
 #### TO-DO ####
-- Route Table (?)
 - Instance profile 
 - Role (policy)
 
@@ -10,6 +9,7 @@ Permessi delle EC2 per usare EFS/RDS?
 
 Come fare il setup di wordpress?
 Come imposto le credenziali del DB in modo sicuro?
+DB AWSAuthenticationPlugin
 
 Decidere meglio policy di autoscaling
 Vedere se ci sono altre policy da specificare
