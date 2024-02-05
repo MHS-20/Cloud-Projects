@@ -36,6 +36,51 @@ Resources:
       CidrBlock: "10.0.2.0/24"
       AvailabilityZone: "us-east-1b"
 
+  PublicSubnet:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      VpcId: !Ref WpVPC
+      CidrBlock: "10.0.0.0/24"
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: "us-east-1c"
+
+#### NAT Gateway ####
+  EIP:
+    Type: "AWS::EC2::EIP"
+    Properties:
+      Domain: vpc
+
+  NatGateway:
+    Type: "AWS::EC2::NatGateway"
+    Properties:
+      AllocationId: !GetAtt EIP.AllocationId
+      SubnetId: !Ref PublicSubnet
+
+  ##### ROUTE TABLES #####
+  RouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+
+  NAT-Route:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref RouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref NatGateway
+    DependsOn: NatGateway
+
+  SubnetRouteTableAssociationA:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref RouteTable
+      SubnetId: !Ref SubnetA
+  SubnetRouteTableAssociationB:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref RouteTable
+      SubnetId: !Ref SubnetB
+
   ##### SECURITY GROUPS #####
   # Exposed to the Internet
   ALBSecurityGroup:
@@ -106,45 +151,166 @@ Resources:
       SubnetIds:
         - Ref: SubnetA
         - Ref: SubnetB
+  
+  FileSystem: 
+    Type: "AWS::EFS::FileSystem"
+    Properties: 
+      Encrypted: "true"
+      PerformanceMode: "generalPurpose"
+      ThroughputMode: "bursting"
+      BackupPolicy: 
+        Status: "ENABLED"
+        PreferredBackupWindow: "02:00-03:00"
+        BackupRetentionPeriod: 7
+      FileSystemPolicy: 
+        Version: "2012-10-17"
+        Statement: 
+          - Effect: "Deny"
+            Principal: 
+              AWS: "*"
+            Action: "*"
 
+    MountTargetA: 
+      Type: "AWS::EFS::MountTarget"
+      Properties: 
+        FileSystemId: !Ref FileSystem
+        SubnetId: !Ref SubnetA
+        SecurityGroups: 
+          - !Ref EFS_SecurityGroup
+    MountTargetB:
+      Type: "AWS::EFS::MountTarget"
+      Properties:
+        FileSystemId: !Ref FileSystem
+        SubnetId: !Ref SubnetB
+        SecurityGroups:
+          - !Ref EFS_SecurityGroup
+
+### Load Balancer 
   ALB:
     Type: "AWS::ElasticLoadBalancingV2::LoadBalancer"
     Properties:
       Name: "my-alb"
       Subnets:
-        - !Ref SubnetA
-        - !Ref SubnetB
+        - !Ref PublicSubnet
       SecurityGroups:
         - !Ref ALBSecurityGroup
       Scheme: "internet-facing"
+      DependsOn: VPCGatewayAttachment
       LoadBalancerAttributes:
         - Key: "idle_timeout.timeout_seconds"
           Value: "60"
 
+### ALB Target Group
+  TargetGroup:
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
+    Properties:
+      Name: "my-target-group"
+      Port: 80
+      Protocol: "HTTP"
+      VpcId: !Ref WpVPC
+      HealthCheckIntervalSeconds: 30
+      HealthCheckPath: "/"
+      HealthCheckProtocol: "HTTP"
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 2
+      Matcher:
+        HttpCode: "200"
+
+### ALB Listener
+  Listener:
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
+    Properties:
+      DefaultActions:
+        - Type: "forward"
+          TargetGroupArn: !Ref TargetGroup
+      LoadBalancerArn: !Ref ALB
+      Port: 80
+      Protocol: "HTTP"
+
+### Launch Template
+  LaunchTemplate: 
+    Type: "AWS::EC2::LaunchTemplate"
+    Properties: 
+      LaunchTemplateName: "my-launch-template"
+      LaunchTemplateData: 
+        ImageId: "ami-0c55b159cbfafe1f0"
+        InstanceType: "t2.micro"
+        SecurityGroupIds: 
+          - !Ref WPSecurityGroup
+        UserData: 
+          Fn::Base64: !Sub |
+            #!/bin/bash -xe
+
+            # * Installing Apache, PHP and MySQL
+            yum update -y
+            yum install -y httpd24 php56 mysql55-server php56-mysqlnd
+
+            # * Mounting EFS
+            yum install -y amazon-efs-utils
+            mkdir /var/www/html/wp-content
+            mount -t efs ${FileSystem}:/ /var/www/html/wp-content
+
+            # * Installing WordPress
+            wget https://wordpress.org/latest.tar.gz
+            tar -xzf latest.tar.gz -C /var/www/html --strip-components=1
+            chown -R apache:apache /var/www/html/
+            chmod -R 755 /var/www/html/
+
+            cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+            sed -i "s/database_name_here/$DB_NAME/g" /var/www/html/wp-config.php
+            sed -i "s/username_here/$DB_USER/g" /var/www/html/wp-config.php
+            sed -i "s/password_here/$DB_PASSWORD/g" /var/www/html/wp-config.php
+            sed -i "s/localhost/$DB_HOST/g" /var/www/html/wp-config.php
+
+            # * Starting Apache
+            systemctl start httpd
+            chkconfig httpd on
+
+### Auto Scaling Group
   AutoScalingGroup:
     Type: "AWS::AutoScaling::AutoScalingGroup"
     Properties:
+      LaunchTemplate:
+        LaunchTemplateId: !Ref LaunchTemplate
+        Version: !GetAtt LaunchTemplate.LatestVersionNumber
+      MinSize: 1
+      MaxSize: 3
+      DesiredCapacity: 2
+      HealthCheckGracePeriod: 120
+      HealthCheckType: EC2
       VPCZoneIdentifier:
-        - !Ref MySubnetA
-        - !Ref MySubnetB
-      LaunchConfigurationName: !Ref MyLaunchConfig
-      MinSize: "2"
-      MaxSize: "4"
+        - !Ref SubnetA
+        - !Ref SubnetB
 
-  WPInstance:
-    Type: "AWS::EC2::Instance"
+### Scaling Policy
+  ScalingPolicy:
+    Type: "AWS::AutoScaling::ScalingPolicy"
     Properties:
-      ImageId: "ami-0c55b159cbfafe1f0"
-      InstanceType: "t2.micro"
-      KeyName: "mykey"
-      SecurityGroupIds:
-        - !Ref WPSecurityGroup
-      SubnetId: !Ref SubnetA
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash -xe
-          yum update -y
-          yum install -y httpd24 php56 mysql55-server php56-mysqlnd
-          service httpd start
-          chkconfig httpd on
-          echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
+      AutoScalingGroupName: !Ref AutoScalingGroup
+      PolicyType: "TargetTrackingScaling"
+      TargetTrackingScalingPolicyConfiguration:
+        TargetValue: 70
+        PredefinedMetricSpecification:
+          PredefinedMetricType: "ASGAverageCPUUtilization"
+        ScaleInCooldown: 60
+        ScaleOutCooldown: 60
+      DependsOn: VPCGatewayAttachment
+
+  # WPInstance:
+  #   Type: "AWS::EC2::Instance"
+  #   Properties:
+  #     ImageId: "ami-0c55b159cbfafe1f0"
+  #     InstanceType: "t2.micro"
+  #     KeyName: "mykey"
+  #     SecurityGroupIds:
+  #       - !Ref WPSecurityGroup
+  #     SubnetId: !Ref SubnetA
+  #     UserData:
+  #       Fn::Base64: !Sub |
+  #         #!/bin/bash -xe
+  #         yum update -y
+  #         yum install -y httpd24 php56 mysql55-server php56-mysqlnd
+  #         service httpd start
+  #         chkconfig httpd on
+  #         echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php

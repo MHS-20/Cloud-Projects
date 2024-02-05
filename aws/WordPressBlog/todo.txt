@@ -1,22 +1,21 @@
 
 #### TO-DO ####
-- EFS (mount point) 
 - Route Table (?)
-
-- LoadBalancer
-- TargetGroup
-- Listener
-
-- AutoScaling Group
-- Launch template
-
 - Instance profile 
 - Role (policy)
 
 Collegamento WP-RDS-EFS ? 
-Con immutable è facile.
+A che serve EFS nell'applicazione?
+Permessi delle EC2 per usare EFS/RDS?
+
+Come fare il setup di wordpress?
+Come imposto le credenziali del DB in modo sicuro?
+
+Decidere meglio policy di autoscaling
+Vedere se ci sono altre policy da specificare
 
 * Extras
+- NACLs
 - PatchManager
 - CloudWatch Alarm
 - Lambda/EventBridge (CH6)
@@ -31,23 +30,23 @@ EFS SecurityGroup
 LoadBalancer SecurityGroup
 
 
-Come imposto le credenziali del DB in modo sicuro?
-
-Le istanze EC2 rispondono direttamente, oppure passano per ALB? 
-Nel primo caso avrebbero bisogno di un NAT ed una ROUTE. 
-
-
 **********
 - Teoria 
 Un security group per il load balancer, accetta dall'esterno. 
 EC2 accetta solo da altri security groups. 
 
-Devo aggiungere un IGW per l'ALB, perché IGW è legato alla VPC.
-Visto che IGW non è legato a nessuna subnet, non ne serve una per ALB. 
+Devo aggiungere un IGW per l'ALB, perché è internet-facing. 
+IGW non è legato a nessuna subnet ma all'intero VPC, 
+invece in NAT ha bisogno di una subnet pubblica.
 
-Le regole del security group determinano quali 
-risorse possono comunicare con la risorsa associata.
+Le regole del security group determinano quali risorse possono comunicare con la risorsa associata.
 Le subnet determinano in quale parte della VPC risiede la risorsa.
+
+Public Subnet se c'è una route verso IGW. 
+Private Subnet se c'è una route verso NAT.
+
+EC2 sono in una subnet privata ed hanno una route per il NAT.
+ALB non ha bisogno di stare nella stessa subnet di EC2 perchè usa il target group.
 
 Traffic between subnets of a VPC is always routed by default. You can’t remove the
 routes between the subnets. If you want to prevent traffic between subnets in a VPC,

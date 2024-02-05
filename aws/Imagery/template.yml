@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Description: Imagery Stack
 Resources:
   VPC:
@@ -21,7 +21,7 @@ Resources:
     Properties:
       AvailabilityZone: !Select
         - 0
-        - !GetAZs ''
+        - !GetAZs ""
       CidrBlock: 172.31.38.0/24
       VpcId: !Ref VPC
 
@@ -30,7 +30,7 @@ Resources:
     Properties:
       AvailabilityZone: !Select
         - 1
-        - !GetAZs ''
+        - !GetAZs ""
       CidrBlock: 172.31.37.0/24
       VpcId: !Ref VPC
 
@@ -133,6 +133,7 @@ Resources:
         - LoadBalancerSecurityGroup
       Scheme: internet-facing
     DependsOn: VPCGatewayAttachment
+
   Listener:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
@@ -142,6 +143,7 @@ Resources:
           TargetGroupArn: !Ref LoadBalancerTargetGroup
       Port: 80
       Protocol: HTTP
+
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
@@ -170,7 +172,7 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal:
@@ -181,7 +183,7 @@ Resources:
       Policies:
         - PolicyName: sqs
           PolicyDocument:
-            Version: '2012-10-17'
+            Version: "2012-10-17"
             Statement:
               - Effect: Allow
                 Action:
@@ -190,7 +192,7 @@ Resources:
                 Resource: !Sub ${SQSQueue.Arn}
         - PolicyName: s3
           PolicyDocument:
-            Version: '2012-10-17'
+            Version: "2012-10-17"
             Statement:
               - Effect: Allow
                 Action:
@@ -200,7 +202,7 @@ Resources:
                 Resource: !Sub arn:aws:s3:::${Bucket}/*
         - PolicyName: dynamodb
           PolicyDocument:
-            Version: '2012-10-17'
+            Version: "2012-10-17"
             Statement:
               - Effect: Allow
                 Action:
@@ -209,14 +211,14 @@ Resources:
                 Resource: !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${Table}
         - PolicyName: ssm
           PolicyDocument:
-            Version: '2012-10-17'
+            Version: "2012-10-17"
             Statement:
               - Effect: Allow
                 Action:
                   - ssmmessages:*
                   - ssm:UpdateInstanceInformation
                   - ec2messages:*
-                Resource: '*'
+                Resource: "*"
 
   WorkerLaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
@@ -243,7 +245,7 @@ Resources:
             cd /home/ec2-user/worker/
             sudo -u ec2-user ImageQueue=${SQSQueue} ImageBucket=${Bucket} nohup node worker.js > worker.log &
             /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource WorkerAutoScalingGroup --region ${AWS::Region}
-  
+
   WorkerAutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
@@ -279,7 +281,7 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal:
@@ -290,21 +292,21 @@ Resources:
       Policies:
         - PolicyName: sqs
           PolicyDocument:
-            Version: '2012-10-17'
+            Version: "2012-10-17"
             Statement:
               - Effect: Allow
                 Action: sqs:SendMessage
                 Resource: !Sub ${SQSQueue.Arn}
         - PolicyName: s3
           PolicyDocument:
-            Version: '2012-10-17'
+            Version: "2012-10-17"
             Statement:
               - Effect: Allow
                 Action: s3:PutObject
                 Resource: !Sub arn:aws:s3:::${Bucket}/*
         - PolicyName: dynamodb
           PolicyDocument:
-            Version: '2012-10-17'
+            Version: "2012-10-17"
             Statement:
               - Effect: Allow
                 Action:
@@ -314,14 +316,14 @@ Resources:
                 Resource: !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${Table}
         - PolicyName: ssm
           PolicyDocument:
-            Version: '2012-10-17'
+            Version: "2012-10-17"
             Statement:
               - Effect: Allow
                 Action:
                   - ssmmessages:*
                   - ssm:UpdateInstanceInformation
                   - ec2messages:*
-                Resource: '*'
+                Resource: "*"
 
   ServerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
