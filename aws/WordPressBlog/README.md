@@ -6,6 +6,6 @@ The infrastructure is completely build using a CloudFormation template.
 
 WordPress is installed and configured throught the template. 
 
-Many best practices are missing right now, for now it's just a simple example.
+Many best practices are missing, for now it's just a simple example.
 
 ![MISSING IMAGE](wordpress.drawio.png)
