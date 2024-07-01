@@ -11,6 +11,10 @@
 - systemd
 - dnsmasq
 
+
+![image](networkimage.png)
+
+
   ## Tasks
 
 **Network Configuration:**
