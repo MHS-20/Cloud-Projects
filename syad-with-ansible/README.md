@@ -13,8 +13,6 @@
 
   ## Tasks
 
-  Certainly! Here's a better formatted version of the provided information:
-
 **Network Configuration:**
 - **Server ("S")**: Acts as a storage system for user data.
 - **Clients ("Cx")**: Interface with Server "S".
