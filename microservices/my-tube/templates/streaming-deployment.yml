@@ -26,6 +26,34 @@ spec:
         - name: { { .Values.streaming.image.name } }
           image: "{{ .Values.streaming.image.repository }}/{{ .Values.streaming.image.name }}:{{ .Values.streaming.image.tag }}"
           imagePullPolicy: { { .Values.streaming.image.pullPolicy } }
+
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: streaming-configmap
+                  key: PORT
+            - name: VIDEO_STORAGE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: streaming-configmap
+                  key: VIDEO_STORAGE_HOST
+            - name: VIDEO_STORAGE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: streaming-configmap
+                  key: VIDEO_STORAGE_PORT
+            - name: DBHOST
+              valueFrom:
+                configMapKeyRef:
+                  name: streaming-configmap
+                  key: DBHOST
+            - name: DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: streaming-configmap
+                  key: DBNAME
+
           resources:
             limits:
               memory: { { .Values.streaming.resources.limits.memory } }

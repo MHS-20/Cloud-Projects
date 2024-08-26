@@ -26,6 +26,26 @@ spec:
         - name: { { .Values.storage.image.name } }
           image: "{{ .Values.storage.image.repository }}/{{ .Values.storage.image.name }}:{{ .Values.storage.image.tag }}"
           imagePullPolicy: { { .Values.storage.image.pullPolicy } }
+          
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: storage-configmap
+                  key: PORT
+            - name: STORAGE_ACCOUNT_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: storage-configmap
+                  key: STORAGE_ACCOUNT_NAME
+            - name: STORAGE_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: azure-storage-access-key
+                  key: STORAGE_ACCESS_KEY
+
+          
+          
           resources:
             limits:
               memory: { { .Values.storage.resources.limits.memory } }
