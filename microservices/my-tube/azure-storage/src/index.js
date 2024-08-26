@@ -27,7 +27,6 @@ if (!process.env.STORAGE_ACCESS_KEY) {
   );
 }
 
-
 // Extracts env vars
 const PORT = process.env.PORT;
 const STORAGE_ACCOUNT_NAME = process.env.STORAGE_ACCOUNT_NAME;
