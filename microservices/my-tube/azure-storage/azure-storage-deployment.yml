@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azure-storage
+  labesl:
+    app: mytube
+    environment: dev
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mytube
+      service: storage
+      provider: azure
+
+  template:
+    metadata:
+      labels:
+        app: mytube
+        service: storage
+        provider: azure
+
+    spec:
+      containers:
+        - name: azure-storage
+          image: your-registry/azure-storage:tag
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 4001

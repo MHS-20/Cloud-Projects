@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: video-streaming
+  labels:
+    app: mytube
+    environment: dev
+    
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mytube
+      service: streaming
+
+  template:
+    metadata:
+      labels:
+        app: mytube
+        service: streaming
+
+    spec:
+      containers:
+        - name: video-streaming
+          image: your-registry/your-service-name:tag
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 4002

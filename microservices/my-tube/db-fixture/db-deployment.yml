@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mytube-db
+  labels: 
+    app: mytube
+    environment: dev
+
+spec:
+  selector:
+    matchLabels:
+      app: mytube
+      service: db
+
+  template:
+    metadata:
+      labels:
+        app: mytube
+        service: db
+
+    spec:
+      containers:
+      - name: db
+        image:  mongo:7.0.0
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 27017

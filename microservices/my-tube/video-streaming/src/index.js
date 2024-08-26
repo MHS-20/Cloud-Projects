@@ -2,10 +2,7 @@ const express = require("express");
 const http = require("http");
 const mongodb = require("mongodb");
 
-//
-// Throws an error if the any required environment variables are missing.
-//
-
+// Check Env Vars
 if (!process.env.PORT) {
   throw new Error(
     "Please specify the port number for the HTTP server with the environment variable PORT."
@@ -36,10 +33,7 @@ if (!process.env.DBNAME) {
   );
 }
 
-//
-// Extracts environment variables to globals for convenience.
-//
-
+// Extracts env vars
 const PORT = process.env.PORT;
 const VIDEO_STORAGE_HOST = process.env.VIDEO_STORAGE_HOST;
 const VIDEO_STORAGE_PORT = parseInt(process.env.VIDEO_STORAGE_PORT);
@@ -51,7 +45,8 @@ console.log(
 );
 
 async function main() {
-  const client = await mongodb.MongoClient.connect(DBHOST); // Connects to the database.
+  // Connecting to the database
+  const client = await mongodb.MongoClient.connect(DBHOST);
   const db = client.db(DBNAME);
   const videosCollection = db.collection("videos");
 
@@ -60,20 +55,21 @@ async function main() {
   app.get("/video", async (req, res) => {
     const videoId = new mongodb.ObjectId(req.query.id);
     const videoRecord = await videosCollection.findOne({ _id: videoId });
+
+    // Video not found
     if (!videoRecord) {
-      // The video was not found.
       res.sendStatus(404);
       return;
     }
 
     console.log(`Translated id ${videoId} to path ${videoRecord.videoPath}.`);
 
+    // Forward the request to the video storage microservice
     const forwardRequest = http.request(
-      // Forward the request to the video storage microservice.
       {
         host: VIDEO_STORAGE_HOST,
         port: VIDEO_STORAGE_PORT,
-        path: `/video?path=${videoRecord.videoPath}`, // Video path now retrieved from the database.
+        path: `/storage?path=${videoRecord.videoPath}`,
         method: "GET",
         headers: req.headers,
       },
@@ -86,9 +82,8 @@ async function main() {
     req.pipe(forwardRequest);
   });
 
-  //
+
   // Starts the HTTP server.
-  //
   app.listen(PORT, () => {
     console.log(
       `Microservice listening, please load the data file db-fixture/videos.json into your database before testing this microservice.`
