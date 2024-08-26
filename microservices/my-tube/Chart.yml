@@ -1,5 +1,5 @@
 apiVersion: v2 
-name: azure-storage-chart 
+name: video-streaming-chart 
 version: 0.1.0
 type: application
 
@@ -8,8 +8,8 @@ maintainers:
     email: muhamad.salman2001@gmail.com
 
 keywords:
-  - azure
-  - storage
+  - streaming
+  - video
   - mytube
 
 # # Dipendenze del chart

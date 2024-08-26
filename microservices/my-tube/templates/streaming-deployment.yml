@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: { { .Values.streaming.service.name } }
+  labels:
+    app: { { .Values.streaming.labels.app } }
+    environment: { { .Values.streaming.labels.environment } }
+
+spec:
+  replicas: { { .Values.streaming.replicaCount } }
+  selector:
+    matchLabels:
+      app: { { .Values.streaming.labels.app } }
+      service: { { .Values.streaming.labels.service } }
+      provider: { { .Values.streaming.labels.provider } }
+
+  template:
+    metadata:
+      labels:
+        app: { { .Values.streaming.labels.app } }
+        service: { { .Values.streaming.labels.service } }
+        provider: { { .Values.streaming.labels.provider } }
+
+    spec:
+      containers:
+        - name: { { .Values.streaming.image.name } }
+          image: "{{ .Values.streaming.image.repository }}/{{ .Values.streaming.image.name }}:{{ .Values.streaming.image.tag }}"
+          imagePullPolicy: { { .Values.streaming.image.pullPolicy } }
+          resources:
+            limits:
+              memory: { { .Values.streaming.resources.limits.memory } }
+              cpu: { { .Values.streaming.resources.limits.cpu } }
+          ports:
+            - containerPort: { { .Values.streaming.service.targetPort } }

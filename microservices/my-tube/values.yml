@@ -1,0 +1,118 @@
+#### STREAMING SERVICE ######
+# Streaming Deployment Object
+streaming:
+  replicaCount: 2
+
+  image:
+    repository: mhs20/mytube
+    name: video-streaming
+    tag: "0.1.0"
+    pullPolicy: IfNotPresent
+
+  resources:
+    limits:
+      memory: "128Mi"
+      cpu: "500m"
+
+  service:
+    name: video-streaming
+    port: 4002
+
+  labels:
+    app: mytube
+    environment: dev
+    service: streaming
+
+# Streaming ClusterIP Service
+streamingIP:
+  name: video-streaming
+  type: ClusterIP
+  port: 4002
+  targetPort: 4002
+  labels:
+    app: mytube
+    service: streaming
+
+# Streaming ConfigMap
+streamingConfig:
+  PORT: 4002
+  VIDEO_STORAGE_HOST: azure-storage
+  VIDEO_STORAGE_PORT: 4001
+  DBHOST: mytube-db
+  DBNAME: mytube-mongodb
+
+#### STORAGE SERVICE ######
+# Storage Deployment Object
+storage:
+  replicaCount: 2
+
+  image:
+    repository: mhs20/mytube
+    name: azure-storage
+    tag: "0.1.0"
+    pullPolicy: IfNotPresent
+
+  resources:
+    limits:
+      memory: "128Mi"
+      cpu: "500m"
+
+  service:
+    name: azure-storage
+    port: 4001
+
+  labels:
+    app: mytube
+    environment: dev
+    service: storage
+    provider: azure
+
+# Storage ClusterIP Service
+storageIP:
+  name: azure-storage
+  type: ClusterIP
+  port: 4001
+  targetPort: 4001
+  labels:
+    app: mytube
+    service: storage
+
+# Storage ConfigMap
+storageConfig:
+  PORT: 4001
+  STORAGE_ACCOUNT_NAME: "sentinel27"
+
+#### DB SERVICE ######
+# DB Deployment Object
+db:
+  replicaCount: 2
+
+  image:
+    repository: mhs20/mytube
+    name: mytube-db
+    tag: "0.1.0"
+    pullPolicy: IfNotPresent
+
+  resources:
+    limits:
+      memory: "128Mi"
+      cpu: "500m"
+
+  service:
+    name: mytube-db
+    port: 4000
+
+  labels:
+    app: mytube
+    environment: dev
+    service: db
+
+# Storage ClusterIP Service
+dbIP:
+  name: mytube-db
+  type: ClusterIP
+  port: 4000
+  targetPort: 27017
+  labels:
+    app: mytube
+    service: db
