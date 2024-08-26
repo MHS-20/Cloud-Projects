@@ -1,6 +1,8 @@
-MyTube
+# MyTube 
+## Video streaming platform
 
-Video streaming platform
+### Project is still a work in progess
+The complete tech stack will be the following:
 
 ### Tech Stack ###
 - Nodejs

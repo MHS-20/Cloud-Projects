@@ -1,4 +1,4 @@
-###### Imagery 
+## Imagery 
 Imagery is a fault-tolerant web app hosted on AWS. Users can upload an image and apply a sepia filter. To improve felxibility and scalability, the process is designed as asynchronous (SQS).
 
 When a user wants to upload an image, the user creates a process first. This returns a unique ID. With that ID, the user can upload an image. If the image upload is finished, the worker begins to process the image in the background.
