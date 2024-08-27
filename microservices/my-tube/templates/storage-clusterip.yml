@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: { { .Values.storageIP.name } }
+  name: {{ .Values.storageIP.name }}
   labels:
-    app: { { .Values.storageIP.labels.app } }
-    environment: { { .Values.storageIP.labels.environment } }
+    app: {{ .Values.storageIP.labels.app }}
+    environment: {{ .Values.storage.labels.environment }}
 spec:
-  type: { { .Values.storageIP.type } }
+  type: {{ .Values.storageIP.type }}
   selector:
-    app: { { .Values.storageIP.labels.app } }
-    service: { { .Values.storageIP.labels.service } }
+    app: {{ .Values.storageIP.labels.app }}
+    service: {{ .Values.storageIP.labels.service }}
   ports:
   - protocol: TCP
-    port: { { .Values.storageIP.port } }
-    targetPort: { { .Values.storageIP.targetPort } }
+    port: {{ .Values.storageIP.port }}
+    targetPort: {{ .Values.storageIP.targetPort }}

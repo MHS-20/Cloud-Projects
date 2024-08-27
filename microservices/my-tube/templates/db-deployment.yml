@@ -1,34 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: { { .Values.db.service.name } }
+  name: {{ .Values.db.service.name }}
   labels:
-    app: { { .Values.db.labels.app } }
-    environment: { { .Values.db.labels.environment } }
+    app: {{ .Values.db.labels.app }}
+    environment: {{ .Values.db.labels.environment }}
 
 spec:
-  replicas: { { .Values.db.replicaCount } }
+  replicas: {{ .Values.db.replicaCount }}
   selector:
     matchLabels:
-      app: { { .Values.db.labels.app } }
-      service: { { .Values.db.labels.service } }
-      provider: { { .Values.db.labels.provider } }
+      app: {{ .Values.db.labels.app }}
+      service: {{ .Values.db.labels.service }}
 
   template:
     metadata:
       labels:
-        app: { { .Values.db.labels.app } }
-        service: { { .Values.db.labels.service } }
-        provider: { { .Values.db.labels.provider } }
+        app: {{ .Values.db.labels.app }}
+        service: {{ .Values.db.labels.service }}
 
     spec:
       containers:
-        - name: { { .Values.db.labels.service } }
-          image: "{{ .Values.db.image.repository }}/{{ .Values.db.image.name }}:{{ .Values.db.image.tag }}"
-          imagePullPolicy: { { .Values.db.image.pullPolicy } }
+        - name: {{ .Values.db.labels.service }}
+          image: "{{ .Values.db.image.repository }}:{{ .Values.db.image.tag }}"
+          imagePullPolicy: {{ .Values.db.image.pullPolicy }}
           resources:
             limits:
-              memory: { { .Values.db.resources.limits.memory } }
-              cpu: { { .Values.db.resources.limits.cpu } }
+              memory: {{ .Values.db.resources.limits.memory }}
+              cpu: {{ .Values.db.resources.limits.cpu }}
           ports:
-            - containerPort: { { .Values.db.service.targetPort } }
+            - containerPort: {{ .Values.db.service.port }}

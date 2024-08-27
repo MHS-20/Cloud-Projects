@@ -5,8 +5,7 @@ streaming:
 
   image:
     repository: mhs20/mytube
-    name: video-streaming
-    tag: "0.1.0"
+    tag: video-streaming-0.1.0
     pullPolicy: IfNotPresent
 
   resources:
@@ -48,8 +47,7 @@ storage:
 
   image:
     repository: mhs20/mytube
-    name: azure-storage
-    tag: "0.1.0"
+    tag: azure-storage-0.1.0
     pullPolicy: IfNotPresent
 
   resources:
@@ -89,8 +87,7 @@ db:
 
   image:
     repository: mhs20/mytube
-    name: mytube-db
-    tag: "0.1.0"
+    tag: mytube-db-0.1.0
     pullPolicy: IfNotPresent
 
   resources:

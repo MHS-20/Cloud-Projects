@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: { { .Values.storage.image.name } }
-          image: "{{ .Values.storage.image.repository }}/{{ .Values.storage.image.name }}:{{ .Values.storage.image.tag }}"
+          image: "{{ .Values.storage.image.repository }}:{{ .Values.storage.image.tag }}"
           imagePullPolicy: { { .Values.storage.image.pullPolicy } }
           
           env:

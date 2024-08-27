@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: { { .Values.streaming.image.name } }
-          image: "{{ .Values.streaming.image.repository }}/{{ .Values.streaming.image.name }}:{{ .Values.streaming.image.tag }}"
+          image: "{{ .Values.streaming.image.repository }}:{{ .Values.streaming.image.tag }}"
           imagePullPolicy: { { .Values.streaming.image.pullPolicy } }
 
           env:

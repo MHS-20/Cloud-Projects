@@ -4,8 +4,8 @@ metadata:
   name: mytube
   service: streaming
 data:
-  PORT: { { .Values.streamingConfig.PORT } }
-  VIDEO_STORAGE_HOST: { { .Values.streamingConfig.VIDEO_STORAGE_HOST } }
-  VIDEO_STORAGE_PORT: { { .Values.streamingConfig.VIDEO_STORAGE_PORT } }
-  DBHOST: { { .Values.streamingConfig.DBHOST } }
-  DBNAME: { { .Values.streamingConfig.DBNAME } }
+  PORT: {{ .Values.streamingConfig.PORT }}
+  VIDEO_STORAGE_HOST: {{ .Values.streamingConfig.VIDEO_STORAGE_HOST }}
+  VIDEO_STORAGE_PORT: {{ .Values.streamingConfig.VIDEO_STORAGE_PORT }}
+  DBHOST: {{ .Values.streamingConfig.DBHOST }}
+  DBNAME: {{ .Values.streamingConfig.DBNAME }}

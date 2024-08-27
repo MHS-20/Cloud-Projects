@@ -4,5 +4,5 @@ metadata:
   name: mytube
   service: storage
 data:
-  PORT: { { .Values.streamingConfig.PORT } }
-  STORAGE_ACCOUNT_NAME: { { .Values.streamingConfig.STORAGE_ACCOUNT_NAME } }
+  PORT: {{ .Values.streamingConfig.PORT }}
+  STORAGE_ACCOUNT_NAME: {{ .Values.storageConfig.STORAGE_ACCOUNT_NAME }}
