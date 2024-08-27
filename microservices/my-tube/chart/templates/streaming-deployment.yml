@@ -1,31 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: { { .Values.streaming.service.name } }
+  name: {{ .Values.streaming.service.name }}
   labels:
-    app: { { .Values.streaming.labels.app } }
-    environment: { { .Values.streaming.labels.environment } }
+    app: {{ .Values.streaming.labels.app }}
+    environment: {{ .Values.streaming.labels.environment }}
 
 spec:
-  replicas: { { .Values.streaming.replicaCount } }
+  replicas: {{ .Values.streaming.replicaCount }}
   selector:
     matchLabels:
-      app: { { .Values.streaming.labels.app } }
-      service: { { .Values.streaming.labels.service } }
-      provider: { { .Values.streaming.labels.provider } }
+      app: {{ .Values.streaming.labels.app }}
+      service: {{ .Values.streaming.labels.service }}
 
   template:
     metadata:
       labels:
-        app: { { .Values.streaming.labels.app } }
-        service: { { .Values.streaming.labels.service } }
-        provider: { { .Values.streaming.labels.provider } }
+        app: {{ .Values.streaming.labels.app }}
+        service: {{ .Values.streaming.labels.service }}
 
     spec:
       containers:
-        - name: { { .Values.streaming.image.name } }
+        - name: {{ .Values.streaming.image.tag }}
           image: "{{ .Values.streaming.image.repository }}:{{ .Values.streaming.image.tag }}"
-          imagePullPolicy: { { .Values.streaming.image.pullPolicy } }
+          imagePullPolicy: {{ .Values.streaming.image.pullPolicy }}
 
           env:
             - name: PORT
@@ -56,7 +54,7 @@ spec:
 
           resources:
             limits:
-              memory: { { .Values.streaming.resources.limits.memory } }
-              cpu: { { .Values.streaming.resources.limits.cpu } }
+              memory: {{ .Values.streaming.resources.limits.memory }}
+              cpu: {{ .Values.streaming.resources.limits.cpu }}
           ports:
-            - containerPort: { { .Values.streaming.service.targetPort } }
+            - containerPort: {{ .Values.streaming.service.port }}

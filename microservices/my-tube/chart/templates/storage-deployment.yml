@@ -1,31 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: { { .Values.storage.service.name } }
+  name: {{ .Values.storage.service.name }}
   labels:
-    app: { { .Values.storage.labels.app } }
-    environment: { { .Values.storage.labels.environment } }
+    app: {{ .Values.storage.labels.app }}
+    environment: {{ .Values.storage.labels.environment }}
 
 spec:
-  replicas: { { .Values.storage.replicaCount } }
+  replicas: {{ .Values.storage.replicaCount }}
   selector:
     matchLabels:
-      app: { { .Values.storage.labels.app } }
-      service: { { .Values.storage.labels.service } }
-      provider: { { .Values.storage.labels.provider } }
+      app: {{ .Values.storage.labels.app }}
+      service: {{ .Values.storage.labels.service }}
+      provider: {{ .Values.storage.labels.provider }}
 
   template:
     metadata:
       labels:
-        app: { { .Values.storage.labels.app } }
-        service: { { .Values.storage.labels.service } }
-        provider: { { .Values.storage.labels.provider } }
+        app: {{ .Values.storage.labels.app }}
+        service: {{ .Values.storage.labels.service }}
+        provider: {{ .Values.storage.labels.provider }}
 
     spec:
       containers:
-        - name: { { .Values.storage.image.name } }
+        - name: {{ .Values.storage.image.tag }}
           image: "{{ .Values.storage.image.repository }}:{{ .Values.storage.image.tag }}"
-          imagePullPolicy: { { .Values.storage.image.pullPolicy } }
+          imagePullPolicy: {{ .Values.storage.image.pullPolicy }}
           
           env:
             - name: PORT
@@ -48,7 +48,7 @@ spec:
           
           resources:
             limits:
-              memory: { { .Values.storage.resources.limits.memory } }
-              cpu: { { .Values.storage.resources.limits.cpu } }
+              memory: {{ .Values.storage.resources.limits.memory }}
+              cpu: {{ .Values.storage.resources.limits.cpu }}
           ports:
-            - containerPort: { { .Values.storage.service.targetPort } }
+            - containerPort: {{ .Values.storage.service.port }}
