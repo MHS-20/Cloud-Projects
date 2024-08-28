@@ -50,7 +50,8 @@ async function main() {
   const db = client.db(DBNAME);
   const videosCollection = db.collection("videos");
 
-  // mongodb://admin:secretpassword@mongodb-service:27017/mydatabase
+  // mongodb://mytube:secretpassword@mytube-db:4000
+  // mongodb://mytube-db:secretpassword@mytube-db:4000
 
   const app = express();
 
