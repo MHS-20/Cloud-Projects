@@ -1,0 +1,46 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minikube-ingress
+  labels:
+    name: minikube-ingress
+spec:
+  rules:
+    - host: minikube-local
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: video-streaming
+                port:
+                  number: 4002
+          - pathType: Prefix
+            path: "/video"
+            backend:
+              service:
+                name: video-streaming
+                port:
+                  number: 4002
+          - pathType: Prefix
+            path: "/storage"
+            backend:
+              service:
+                name: azure-storage
+                port:
+                  number: 4001
+          - pathType: Prefix
+            path: "/test"
+            backend:
+              service:
+                name: azure-storage
+                port:
+                  number: 4001
+          - pathType: Prefix
+            path: "/mongo"
+            backend:
+              service:
+                name: mytube-db
+                port:
+                  number: 4000

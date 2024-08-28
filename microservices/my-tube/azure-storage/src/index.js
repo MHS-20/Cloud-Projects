@@ -55,6 +55,10 @@ const app = express();
 
 
 // HTTP GET route to retrieve videos from storage
+app.get("/test", async (req, res) => {
+  res.status(200).json({ message: "Request successful", data: "This is a test response" });
+})
+
 app.get("/storage", async (req, res) => {
   const videoPath = req.query.path;
   console.log(`Streaming video from path ${videoPath}.`);
@@ -78,5 +82,5 @@ app.get("/storage", async (req, res) => {
 
 // Starts the HTTP server.
 app.listen(PORT, () => {
-  console.log(`Microservice online`);
+  console.log(`Microservice online with port ${PORT}`);
 });

@@ -20,6 +20,8 @@ spec:
         service: {{ .Values.streaming.labels.service }}
 
     spec:
+      imagePullSecrets:
+        - name: docker-registry-secret
       containers:
         - name: {{ .Values.streaming.image.tag }}
           image: "{{ .Values.streaming.image.repository }}:{{ .Values.streaming.image.tag }}"

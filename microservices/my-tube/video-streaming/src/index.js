@@ -50,6 +50,8 @@ async function main() {
   const db = client.db(DBNAME);
   const videosCollection = db.collection("videos");
 
+  // mongodb://admin:secretpassword@mongodb-service:27017/mydatabase
+
   const app = express();
 
   app.get("/video", async (req, res) => {

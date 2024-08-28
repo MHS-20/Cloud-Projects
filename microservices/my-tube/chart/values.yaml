@@ -5,7 +5,7 @@ streaming:
 
   image:
     repository: mhs20/mytube
-    tag: video-streaming-0.1.0
+    tag: video-streaming-010
     pullPolicy: IfNotPresent
 
   resources:
@@ -37,8 +37,9 @@ streamingConfig:
   PORT: 4002
   VIDEO_STORAGE_HOST: azure-storage
   VIDEO_STORAGE_PORT: 4001
-  DBHOST: mytube-db
-  DBNAME: mytube-mongodb
+  DBHOST: mongodb://mytube:secretpassword@mytube-db:4000/
+  # DBHOST: mytube-db
+  DBNAME: mydb
 
 #### STORAGE SERVICE ######
 # Storage Deployment Object
@@ -47,7 +48,7 @@ storage:
 
   image:
     repository: mhs20/mytube
-    tag: azure-storage-0.1.0
+    tag: azure-storage-010
     pullPolicy: IfNotPresent
 
   resources:
@@ -87,7 +88,7 @@ db:
 
   image:
     repository: mhs20/mytube
-    tag: mytube-db-0.1.0
+    tag: mytube-db-010
     pullPolicy: IfNotPresent
 
   resources:
@@ -104,7 +105,7 @@ db:
     environment: dev
     service: db
 
-# Storage ClusterIP Service
+# Db ClusterIP Service
 dbIP:
   name: mytube-db
   type: ClusterIP

@@ -22,6 +22,8 @@ spec:
         provider: {{ .Values.storage.labels.provider }}
 
     spec:
+      imagePullSecrets:
+        - name: docker-registry-secret
       containers:
         - name: {{ .Values.storage.image.tag }}
           image: "{{ .Values.storage.image.repository }}:{{ .Values.storage.image.tag }}"
@@ -43,8 +45,6 @@ spec:
                 secretKeyRef:
                   name: azure-storage-access-key
                   key: STORAGE_ACCESS_KEY
-
-          
           
           resources:
             limits:

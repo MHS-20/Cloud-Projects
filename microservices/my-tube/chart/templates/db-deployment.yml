@@ -20,13 +20,20 @@ spec:
         service: {{ .Values.db.labels.service }}
 
     spec:
+      imagePullSecrets:
+        - name: docker-registry-secret
       containers:
         - name: {{ .Values.db.labels.service }}
           image: "{{ .Values.db.image.repository }}:{{ .Values.db.image.tag }}"
           imagePullPolicy: {{ .Values.db.image.pullPolicy }}
-          resources:
-            limits:
-              memory: {{ .Values.db.resources.limits.memory }}
-              cpu: {{ .Values.db.resources.limits.cpu }}
+
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: "mytube"
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: "secretpassword"
+            - name: MONGO_INITDB_DATABASE
+              value: "mydb"
+
           ports:
             - containerPort: {{ .Values.db.service.port }}
