@@ -59,6 +59,8 @@ async function main() {
     const videoId = new mongodb.ObjectId(req.query.id);
     const videoRecord = await videosCollection.findOne({ _id: videoId });
 
+    console.log("Video path: ", videoRecord)
+
     // Video not found
     if (!videoRecord) {
       res.sendStatus(404);

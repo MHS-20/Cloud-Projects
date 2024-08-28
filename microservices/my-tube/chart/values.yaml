@@ -1,7 +1,7 @@
 #### STREAMING SERVICE ######
 # Streaming Deployment Object
 streaming:
-  replicaCount: 2
+  replicaCount: 1
 
   image:
     repository: mhs20/mytube
@@ -44,7 +44,7 @@ streamingConfig:
 #### STORAGE SERVICE ######
 # Storage Deployment Object
 storage:
-  replicaCount: 2
+  replicaCount: 1
 
   image:
     repository: mhs20/mytube
@@ -84,7 +84,7 @@ storageConfig:
 #### DB SERVICE ######
 # DB Deployment Object
 db:
-  replicaCount: 2
+  replicaCount: 1
 
   image:
     repository: mhs20/mytube

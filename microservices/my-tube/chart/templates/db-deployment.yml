@@ -35,5 +35,22 @@ spec:
             - name: MONGO_INITDB_DATABASE
               value: "mydb"
 
+          # env:
+          #   - name: MONGO_INITDB_ROOT_USERNAME
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: db-configmap
+          #         key: PORT
+          #   - name: STORAGE_ACCOUNT_NAME
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: storage-configmap
+          #         key: STORAGE_ACCOUNT_NAME
+          #   - name: STORAGE_ACCESS_KEY
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: azure-storage-access-key
+          #         key: STORAGE_ACCESS_KEY
+
           ports:
             - containerPort: {{ .Values.db.service.port }}
