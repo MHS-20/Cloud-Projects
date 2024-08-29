@@ -69,6 +69,7 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public.id
 }
 
+// Elastic IP for NAT gateway
 resource "aws_eip" "nat" {
   vpc = true
 }
@@ -76,12 +77,15 @@ resource "aws_eip" "nat" {
 resource "aws_nat_gateway" "nat" {
   allocation_id = aws_eip.nat.id
   subnet_id     = aws_subnet.public[0].id
+
   tags = {
     Name = "${var.name}-nat"
   }
 }
 
-// Private Route Table
+// -------------------
+//  Public Route Table
+// -------------------
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
 

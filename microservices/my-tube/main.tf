@@ -8,3 +8,12 @@ module "vpc" {
   private_subnets = ["10.0.3.0/24", "10.0.4.0/24"]
   enable_nat_gateway = true
 }
+
+module "security_groups" {
+  source = "./terraform-modules/aws/security-groups"  # Local module
+
+  vpc_id            = module.vpc.vpc_id
+  public_subnet_ids = module.vpc.public_subnet_ids
+  private_subnet_ids = module.vpc.private_subnet_ids
+  allowed_cidr_blocks = ["0.0.0.0/0"]
+}
