@@ -1,5 +1,5 @@
 module "eks" {
-  source          = "terraform-aws-modules/eks/aws"
+  source          = "terraform-modules/aws/aws-eks"
   version         = "0.1.0"
 
   cluster_name    = "mytube-cluster"
