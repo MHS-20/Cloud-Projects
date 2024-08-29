@@ -1,7 +1,8 @@
 # MyTube - DevOps Project
-## Video streaming platform
+### Video streaming platform
 
-### Project is still a work in progess!
+The project is still a work in progess!
+
 The complete tech stack will be the following:
 
 The WebApp Involves: 
@@ -15,7 +16,7 @@ The Infrastructure relies on:
 - Terraform (AWS/Azure)
 - GitHub Actions for CI/CD
 - HashiCorp Vault
-- ElK stack
+- ELK stack
 - Prometheus + Grafana
 
 ### Microservices ###
