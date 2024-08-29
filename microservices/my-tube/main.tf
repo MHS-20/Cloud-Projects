@@ -24,9 +24,20 @@ module "eks" {
   vpc_id            = module.vpc.vpc_id
   public_subnet_ids = module.vpc.public_subnet_ids
   private_subnet_ids = module.vpc.private_subnet_ids
-  node_role_arn     = aws_iam_role.eks_node_role.arn
   desired_capacity  = 2
   max_capacity      = 5
   min_capacity      = 1
-  instance_types    = ["t3.medium"]
+  instance_types    = ["t3.small"]
+}
+
+output "eks_cluster_name" {
+  value = module.eks.cluster_name
+}
+
+output "eks_cluster_endpoint" {
+  value = module.eks.cluster_endpoint
+}
+
+output "eks_cluster_arn" {
+  value = module.eks.cluster_arn
 }
