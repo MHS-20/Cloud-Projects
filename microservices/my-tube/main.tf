@@ -17,3 +17,16 @@ module "security_groups" {
   private_subnet_ids = module.vpc.private_subnet_ids
   allowed_cidr_blocks = ["0.0.0.0/0"]
 }
+
+module "eks" {
+  source = "./terraform-modules/aws/eks"  # Local module
+  cluster_name      = "my-eks-cluster"
+  vpc_id            = module.vpc.vpc_id
+  public_subnet_ids = module.vpc.public_subnet_ids
+  private_subnet_ids = module.vpc.private_subnet_ids
+  node_role_arn     = aws_iam_role.eks_node_role.arn
+  desired_capacity  = 2
+  max_capacity      = 5
+  min_capacity      = 1
+  instance_types    = ["t3.medium"]
+}
