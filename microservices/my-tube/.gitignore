@@ -1,6 +1,4 @@
 .env
+.docker-compose.yml
 .docker-compose.env
 My_notes.md
-
-.gitignore
-.docker-compose.yml
