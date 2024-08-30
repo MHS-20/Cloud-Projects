@@ -15,7 +15,8 @@ resource "aws_iam_role" "eks_node_role" {
     {
       "Effect": "Allow",
       "Principal": {
-        "Service": "eks.amazonaws.com"
+        "Service": ["ec2.amazonaws.com",
+          "eks.amazonaws.com"]
       },
       "Action": "sts:AssumeRole"
     }
@@ -29,6 +30,22 @@ resource "aws_iam_role_policy_attachment" "eks-AmazonEKSClusterPolicy" {
   role       = aws_iam_role.eks_node_role.name
 }
 
+resource "aws_iam_role_policy_attachment" "eks-AmazonEKSWorkerNodePolicy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+  role       = aws_iam_role.eks_node_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "eks-AmazonEC2ContainerRegistryReadOnly" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+  role       = aws_iam_role.eks_node_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "eks-AmazonEKSCNIPolicy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+  role       = aws_iam_role.eks_node_role.name
+}
+
+
 // ------------
 // Creating EKS
 // ------------
@@ -37,8 +54,9 @@ resource "aws_eks_cluster" "eks" {
   role_arn = aws_iam_role.eks_node_role.arn
 
   vpc_config {
-    subnet_ids = var.private_subnet_ids
-    endpoint_public_access = true
+    subnet_ids = concat(var.private_subnet_ids, var.public_subnet_ids)
+
+    endpoint_public_access  = true
     endpoint_private_access = true
   }
 
