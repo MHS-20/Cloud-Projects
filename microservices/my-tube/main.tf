@@ -1,3 +1,8 @@
+
+// -------------
+// ---- AWS ----
+// -------------
+
 module "vpc" {
   source = "./terraform-modules/aws/vpc"  # Local module
 
@@ -40,4 +45,40 @@ output "eks_cluster_endpoint" {
 
 output "eks_cluster_arn" {
   value = module.eks.cluster_arn
+}
+
+
+// ---------------
+// ---- Azure ----
+// ---------------
+
+module "vnet" {
+  source                   = "./terraform-module/azure/vnet"
+  resource_group_name      = "myResourceGroup"
+  location                 = "East EU"
+
+  vnet_name                = "myVNet"
+  vnet_address_space       = ["10.0.0.0/16"]
+  
+  public_subnet_name       = "myPublicSubnet"
+  public_subnet_address_prefix = "10.0.1.0/24"
+  
+  private_subnet_name      = "myPrivateSubnet"
+  private_subnet_address_prefix = "10.0.2.0/24"
+  
+  public_nsg_name          = "myPublicNSG"
+  private_nsg_name         = "myPrivateNSG"
+}
+
+
+output "vnet_id" {
+  value = module.azure_network.vnet_id
+}
+
+output "public_subnet_ids" {
+  value = module.azure_network.public_subnet_ids
+}
+
+output "private_subnet_ids" {
+  value = module.azure_network.private_subnet_ids
 }
