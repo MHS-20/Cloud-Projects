@@ -6,6 +6,14 @@ output "vnet_name" {
   value = azurerm_virtual_network.vnet.name
 }
 
+output "resource_group_id" {
+  value = azurerm_resource_group.rg.id
+}
+
+output "resource_group_name" {
+  value = azurerm_resource_group.rg.name
+}
+
 output "public_subnet_ids" {
   value = azurerm_subnet.public_subnets[*].id
 }
