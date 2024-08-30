@@ -2,3 +2,6 @@
 .docker-compose.yml
 .docker-compose.env
 My_notes.md
+
+.terraform.lock.hcl
+terraform.tfstate
