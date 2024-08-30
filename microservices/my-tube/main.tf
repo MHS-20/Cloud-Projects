@@ -3,7 +3,7 @@
 // ---- AWS ----
 // -------------
 
-module "vpc" {
+module "aws_vpc" {
   source = "./terraform-modules/aws/vpc"  # Local module
 
   name            = "mytube-vpc"
@@ -14,21 +14,22 @@ module "vpc" {
   enable_nat_gateway = true
 }
 
-module "security_groups" {
+module "aws_security_groups" {
   source = "./terraform-modules/aws/security-groups"  # Local module
 
-  vpc_id            = module.vpc.vpc_id
-  public_subnet_ids = module.vpc.public_subnet_ids
-  private_subnet_ids = module.vpc.private_subnet_ids
+  vpc_id            = module.aws_vpc.vpc_id
+  public_subnet_ids = module.aws_vpc.public_subnet_ids
+  private_subnet_ids = module.aws_vpc.private_subnet_ids
   allowed_cidr_blocks = ["0.0.0.0/0"]
 }
 
-module "eks" {
+module "aws_eks" {
   source = "./terraform-modules/aws/eks"  # Local module
   cluster_name      = "my-eks-cluster"
-  vpc_id            = module.vpc.vpc_id
-  public_subnet_ids = module.vpc.public_subnet_ids
-  private_subnet_ids = module.vpc.private_subnet_ids
+  vpc_id            = module.aws_vpc.vpc_id
+  public_subnet_ids = module.aws_vpc.public_subnet_ids
+  private_subnet_ids = module.aws_vpc.private_subnet_ids
+
   desired_capacity  = 2
   max_capacity      = 5
   min_capacity      = 1
@@ -36,15 +37,15 @@ module "eks" {
 }
 
 output "eks_cluster_name" {
-  value = module.eks.cluster_name
+  value = module.aws_eks.cluster_name
 }
 
 output "eks_cluster_endpoint" {
-  value = module.eks.cluster_endpoint
+  value = module.aws_eks.cluster_endpoint
 }
 
 output "eks_cluster_arn" {
-  value = module.eks.cluster_arn
+  value = module.aws_eks.cluster_arn
 }
 
 
@@ -52,7 +53,7 @@ output "eks_cluster_arn" {
 // ---- Azure ----
 // ---------------
 
-module "vnet" {
+module "azure_vnet" {
   source                   = "./terraform-module/azure/vnet"
   resource_group_name      = "myResourceGroup"
   location                 = "East EU"
@@ -70,7 +71,6 @@ module "vnet" {
   private_nsg_name         = "myPrivateNSG"
 }
 
-
 output "vnet_id" {
   value = module.azure_network.vnet_id
 }
@@ -81,4 +81,16 @@ output "public_subnet_ids" {
 
 output "private_subnet_ids" {
   value = module.azure_network.private_subnet_ids
+}
+
+module "azure_security_groups" {
+  source                   = "./terraform-module/azure/security-groups"
+  resource_group_name      = "myResourceGroup"
+  location                 = "East EU"
+
+  private_nsg_name = "private_nsg"
+  public_nsg_name = "public_nsg"
+
+  public_subnet_ids = module.vnet.public_subnet_ids
+  private_subnet_ids = module.vnet.private_subnet_ids
 }

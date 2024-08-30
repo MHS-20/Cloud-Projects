@@ -35,13 +35,3 @@ variable "private_subnet_names" {
   type        = list(string)
   default     = ["private-subnet-1", "private-subnet-2"]
 }
-
-variable "public_nsg_name" {
-  description = "Il nome del Network Security Group per la subnet pubblica"
-  type        = string
-}
-
-variable "private_nsg_name" {
-  description = "Il nome del Network Security Group per la subnet privata"
-  type        = string
-}

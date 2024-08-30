@@ -15,7 +15,6 @@ resource "azurerm_virtual_network" "vnet" {
   }
 }
 
-//------ Subnets -----
 resource "azurerm_subnet" "public_subnets" {
   count = length(var.public_subnet_prefixes)
   name  = var.public_subnet_names[count.index]
@@ -36,27 +35,4 @@ resource "azurerm_subnet" "private_subnets" {
   address_prefixes     = [var.private_subnet_prefixes[count.index]]
 
   depends_on = [azurerm_virtual_network.vnet]
-}
-
-//------ Security Groups -----
-resource "azurerm_network_security_group" "public_nsg" {
-  name                = var.public_nsg_name
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-}
-
-resource "azurerm_network_security_group" "private_nsg" {
-  name                = var.private_nsg_name
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-}
-
-resource "azurerm_subnet_network_security_group_association" "public_subnet_nsg_assoc" {
-  subnet_id                 = azurerm_subnet.public_subnet.id
-  network_security_group_id = azurerm_network_security_group.public_nsg.id
-}
-
-resource "azurerm_subnet_network_security_group_association" "private_subnet_nsg_assoc" {
-  subnet_id                 = azurerm_subnet.private_subnet.id
-  network_security_group_id = azurerm_network_security_group.private_nsg.id
 }

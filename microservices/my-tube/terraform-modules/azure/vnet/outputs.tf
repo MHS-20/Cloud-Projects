@@ -21,11 +21,3 @@ output "public_subnet_names" {
 output "private_subnet_names" {
   value = azurerm_subnet.private_subnets[*].name
 }
-
-output "public_nsg_name" {
-  value = azurerm_network_security_group.public_nsg.name
-}
-
-output "private_nsg_name" {
-  value = azurerm_network_security_group.private_nsg.name
-}
