@@ -70,7 +70,7 @@ resource "azurerm_network_security_rule" "allow_ssh_inbound" {
   network_security_group_name = azurerm_network_security_group.private_nsg.name
 }
 
-resource "azurerm_network_security_rule" "allow_k8s_api" {
+resource "azurerm_network_security_rule" "allow_k8s_api_public" {
   name                        = "Allow-k8sAPI-Inbound"
   priority                    = 110
   direction                   = "Inbound"
@@ -84,7 +84,7 @@ resource "azurerm_network_security_rule" "allow_k8s_api" {
   network_security_group_name = azurerm_network_security_group.private_nsg.name
 }
 
-resource "azurerm_network_security_rule" "allow_k8s_api" {
+resource "azurerm_network_security_rule" "allow_k8s_api_private" {
   name                        = "Allow-k8sAPI-Inbound"
   priority                    = 110
   direction                   = "Inbound"

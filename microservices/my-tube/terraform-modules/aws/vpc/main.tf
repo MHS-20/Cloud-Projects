@@ -71,7 +71,7 @@ resource "aws_route_table_association" "public" {
 
 // Elastic IP for NAT gateway
 resource "aws_eip" "nat" {
-  vpc = true
+  domain = "vpc"
 }
 
 resource "aws_nat_gateway" "nat" {
