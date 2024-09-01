@@ -14,5 +14,5 @@ variable "private_subnet_ids" {
 
 variable "allowed_cidr_blocks" {
   type        = list(string)
-  default     = ["0.0.0.0/0"]
 }
+

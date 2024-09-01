@@ -33,3 +33,7 @@ variable "instance_types" {
   type        = list(string)
   default     = ["t3.small"]
 }
+
+variable "worker_security_group_id" {
+  type        = string
+}

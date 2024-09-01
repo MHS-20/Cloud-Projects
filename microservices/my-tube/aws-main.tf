@@ -20,7 +20,7 @@ module "aws_security_groups" {
   vpc_id              = module.aws_vpc.vpc_id
   public_subnet_ids   = module.aws_vpc.public_subnet_ids
   private_subnet_ids  = module.aws_vpc.private_subnet_ids
-  allowed_cidr_blocks = ["0.0.0.0/0"]
+  allowed_cidr_blocks = module.aws_vpc.private_subnet_cidr
 }
 
 module "aws_eks" {
@@ -29,6 +29,7 @@ module "aws_eks" {
   vpc_id             = module.aws_vpc.vpc_id
   public_subnet_ids  = module.aws_vpc.public_subnet_ids
   private_subnet_ids = module.aws_vpc.private_subnet_ids
+  worker_security_group_id = module.aws_security_groups.private_sg_id
 
   desired_capacity = 2
   max_capacity     = 5
