@@ -20,7 +20,7 @@ streaming:
   labels:
     app: mytube
     environment: dev
-    service: streaming
+    service: video-streaming
 
 # Streaming ClusterIP Service
 streamingIP:

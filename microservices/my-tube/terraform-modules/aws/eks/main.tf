@@ -30,7 +30,11 @@ provider "aws" {
 #   role       = aws_iam_role.eks_node_role.name
 # }
 
-// Cluster Role
+
+
+// -----------------------------
+// ------- Cluster Role --------
+// -----------------------------
 resource "aws_iam_role" "eks_cluster_role" {
   name = "${var.cluster_name}-eks-cluster-role"
 
@@ -58,7 +62,10 @@ resource "aws_iam_role_policy_attachment" "eks_cluster_AmazonEKSVPCResourceContr
   role       = aws_iam_role.eks_cluster_role.name
 }
 
-// Node Role
+
+// -----------------------------
+// --------- Node Role ---------
+// -----------------------------
 resource "aws_iam_role" "eks_node_role" {
   name = "${var.cluster_name}-eks-node-role"
 
@@ -91,9 +98,9 @@ resource "aws_iam_role_policy_attachment" "eks_worker_AmazonEKS_CNI_Policy" {
   role       = aws_iam_role.eks_node_role.name
 }
 
-// ------------
-// Launch Template
-// ------------
+// -----------------------------
+// ---- EKS Launch Template ----
+// -----------------------------
 resource "aws_launch_template" "eks_node_template" {
   name          = "${var.cluster_name}-node-template"
   instance_type = var.instance_types[0]
@@ -105,14 +112,14 @@ resource "aws_launch_template" "eks_node_template" {
   #   # name = aws_iam_instance_profile.eks_node_instance_profile.name
   # }
 
-  # network_interfaces {
-  #   security_groups = [var.worker_security_group_id]
-  # }
+  network_interfaces {
+    security_groups = [var.worker_security_group_id]
+  }
 }
 
-// ------------
-// Creating EKS
-// ------------
+// ----------------------------
+// ------ Creating EKS --------
+// ----------------------------
 resource "aws_eks_cluster" "eks" {
   name     = var.cluster_name
   role_arn = aws_iam_role.eks_cluster_role.arn

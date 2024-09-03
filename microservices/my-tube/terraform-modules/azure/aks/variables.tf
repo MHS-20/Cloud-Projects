@@ -28,10 +28,10 @@ variable "aks_cluster_name" {
 
 variable "node_count" {
   type        = number
-  default     = 3
+  default     = 2
 }
 
 variable "node_vm_size" {
   type        = string
-  default     = "Standard_DS2_v2"
+  default     = "Standard_B2s"
 }

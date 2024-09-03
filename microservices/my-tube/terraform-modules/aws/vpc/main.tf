@@ -55,7 +55,7 @@ resource "aws_route_table" "public" {
 
   route {
     cidr_block = "0.0.0.0/0"  // all out traffic
-    gateway_id = aws_internet_gateway.igw.id // destination
+    gateway_id = aws_internet_gateway.igw.id // IGW as destination
   }
 
   tags = {
@@ -69,6 +69,10 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public.id
 }
 
+// -----------------
+// ---- NAT GW ----- 
+// -----------------
+
 // Elastic IP for NAT gateway
 resource "aws_eip" "nat" {
   domain = "vpc"
@@ -77,6 +81,7 @@ resource "aws_eip" "nat" {
 resource "aws_nat_gateway" "nat" {
   allocation_id = aws_eip.nat.id
   subnet_id     = aws_subnet.public[0].id
+  // nat is a public subnet, it needs the IGW
 
   tags = {
     Name = "${var.name}-nat"
@@ -84,7 +89,7 @@ resource "aws_nat_gateway" "nat" {
 }
 
 // -------------------
-//  Public Route Table
+//  Private Route Table
 // -------------------
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id

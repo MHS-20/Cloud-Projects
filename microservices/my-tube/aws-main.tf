@@ -9,8 +9,8 @@ module "aws_vpc" {
   name               = "mytube-vpc"
   cidr               = "10.0.0.0/16"
   azs                = ["eu-west-2a", "eu-west-2b"]
-  public_subnets     = ["10.0.1.0/24", "10.0.2.0/24"]
-  private_subnets    = ["10.0.3.0/24", "10.0.4.0/24"]
+  public_subnets     = ["10.0.1.0/24"] // , "10.0.2.0/24"]
+  private_subnets    = ["10.0.3.0/24" , "10.0.4.0/24"]
   enable_nat_gateway = true
 }
 
@@ -20,7 +20,9 @@ module "aws_security_groups" {
   vpc_id              = module.aws_vpc.vpc_id
   public_subnet_ids   = module.aws_vpc.public_subnet_ids
   private_subnet_ids  = module.aws_vpc.private_subnet_ids
-  allowed_cidr_blocks = module.aws_vpc.private_subnet_cidr
+
+  public_cidr_blocks = module.aws_vpc.public_subnet_cidr
+  private_cidr_blocks = module.aws_vpc.private_subnet_cidr
 }
 
 module "aws_eks" {
