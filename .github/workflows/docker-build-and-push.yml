@@ -1,0 +1,51 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    paths:
+      - 'microservices/my-tube/video-streaming'
+      - 'microservices/my-tube/azure-storage'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image-dir:
+          - 'vidoe-streaming'
+          - 'azure-storage'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Determine if Image Needs Building
+        id: changes
+        run: |
+          if git diff --name-only ${{ github.sha }} ${{ github.event.before }} | grep -q '^${{ matrix.image-dir }}/'; 
+          then echo "build=true" >> $GITHUB_ENV; 
+          else echo "build=false" >> $GITHUB_ENV; fi
+
+      - name: Login to DockerHub
+        if: env.build == 'true'
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        if: env.build == 'true'
+        run: |
+          IMAGE_TAG=${{ secrets.DOCKER_USERNAME }}/${{ matrix.image-dir }}:${{ github.sha }}
+          docker build -t $IMAGE_TAG ${{ matrix.image-dir }}
+          docker push $IMAGE_TAG
+                    
+      - name: Trigger deploy workflow
+        run: |
+            curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -d '{"event_type": "deploy", "client_payload": {"image_name": "${{ secrets.DOCKER_USERNAME }}/my-app:${{ github.sha }}"}}' \
+            https://api.github.com/repos/${{ github.repository }}/dispatches
+
