@@ -31,6 +31,7 @@ module "aws_eks" {
   vpc_id             = module.aws_vpc.vpc_id
   public_subnet_ids  = module.aws_vpc.public_subnet_ids
   private_subnet_ids = module.aws_vpc.private_subnet_ids
+
   worker_security_group_id = module.aws_security_groups.private_sg_id
 
   desired_capacity = 2
@@ -49,4 +50,12 @@ output "eks_cluster_endpoint" {
 
 output "eks_cluster_arn" {
   value = module.aws_eks.cluster_arn
+}
+
+output "public_sg_id" {
+  value       = module.aws_security_groups.public_sg_id
+}
+
+output "private_sg_id" {
+  value       = module.aws_security_groups.private_sg_id
 }

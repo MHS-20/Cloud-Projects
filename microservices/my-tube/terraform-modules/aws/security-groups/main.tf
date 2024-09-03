@@ -1,25 +1,40 @@
 // Security Groups Module
-
 resource "aws_security_group" "public_sg" {
   name        = "public-subnet-sg"
   description = "Security Group for Public Subnets"
   vpc_id      = var.vpc_id
 
   ingress {
-    description = "Allow HTTP input"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
+    description = "Allow all traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    description = "Allow HTTPS input"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
+ egress {
+    description = "Allow all traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  # ingress {
+  #   description = "Allow HTTP input"
+  #   from_port   = 80
+  #   to_port     = 80
+  #   protocol    = "tcp"
+  #   cidr_blocks = ["0.0.0.0/0"]
+  # }
+
+  # ingress {
+  #   description = "Allow HTTPS input"
+  #   from_port   = 443
+  #   to_port     = 443
+  #   protocol    = "tcp"
+  #   cidr_blocks = ["0.0.0.0/0"]
+  # }
 
   # egress {
   #   description = "Allow HTTP output"
@@ -44,37 +59,37 @@ resource "aws_security_group" "private_sg" {
   description = "Security Group for private subnets"
   vpc_id      = var.vpc_id
 
-  ingress {
-    description = "Allow nodes to communicate with each other"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "tcp"
-    cidr_blocks = var.private_cidr_blocks # only from same private subnet
-  }
-
-  ingress {
-    description = "Allow nodes to receive from public subnet"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "tcp"
-    cidr_blocks = var.public_cidr_blocks # only from same private subnet
-  }
-
-  # egress {
-  #   description = "Allow all outbound traffic"
+  # ingress {
+  #   description = "Allow nodes to communicate with each other"
   #   from_port   = 0
   #   to_port     = 0
-  #   protocol    = "-1"
-  #   cidr_blocks = ["0.0.0.0/0"] // var.allowed_cidr_blocks # only from same private subnet
+  #   protocol    = -1
+  #   cidr_blocks = var.private_cidr_blocks # only from same private subnet
   # }
 
   # ingress {
-  #   description = "Allow all input traffic"
+  #   description = "Allow nodes to receive from public subnet"
   #   from_port   = 0
   #   to_port     = 0
-  #   protocol    = "-1"
-  #   cidr_blocks = var.allowed_cidr_blocks # only from same private subnet
+  #   protocol    = -1
+  #   cidr_blocks = var.public_cidr_blocks # only from same private subnet
   # }
+
+  egress {
+    description = "Allow all outbound traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
+
+  ingress {
+    description = "Allow all input traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
 }
 
