@@ -112,9 +112,9 @@ resource "aws_launch_template" "eks_node_template" {
   #   # name = aws_iam_instance_profile.eks_node_instance_profile.name
   # }
 
-  network_interfaces {
-    security_groups = [var.worker_security_group_id]
-  }
+  # network_interfaces {
+  #   security_groups = [var.worker_security_group_id]
+  # }
 }
 
 // ----------------------------
