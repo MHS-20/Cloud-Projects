@@ -53,7 +53,6 @@ function createBlobService() {
 
 const app = express();
 
-
 // HTTP GET route to retrieve videos from storage
 app.get("/test", async (req, res) => {
   res.status(200).json({ message: "Request successful", data: "This is a test response" });
