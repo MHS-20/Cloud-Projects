@@ -28,14 +28,8 @@ variable "container_name" {
   type        = string
 }
 
-variable "image_repository" {
-  description = "Docker image repository"
-  type        = string
-}
-
-variable "image_tag" {
-  description = "Docker image tag"
-  type        = string
+variable "image_name" {
+  type = string
 }
 
 variable "image_pull_policy" {

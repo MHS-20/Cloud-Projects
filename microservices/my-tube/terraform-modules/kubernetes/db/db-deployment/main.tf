@@ -32,7 +32,7 @@ resource "kubernetes_deployment" "db_deployment" {
 
         container {
           name              = var.db_labels_service
-          image             = "${var.db_image_repository}:${var.db_image_tag}"
+          image             = "${var.db_image_name}"
           image_pull_policy = var.db_image_pull_policy
 
           port {

@@ -26,8 +26,7 @@ module "db_deployment" {
   db_labels_environment = "development"
   db_labels_service     = "my-db"
   db_replica_count      = 3
-  db_image_repository   = "myrepo/mydb"
-  db_image_tag          = "latest"
+  db_image_name         = "IMAGE_PLACEHOLDER"
   db_image_pull_policy  = "IfNotPresent"
   db_service_port       = 27017
 }
@@ -55,7 +54,7 @@ module "storage_service" {
   source = "./terraform-modules/kubernetes/cloud-storage/storage-service"
 
   service_name       = "my-storage-service"
-  service_type       = "ClusterIP" 
+  service_type       = "ClusterIP"
   labels_app         = "my-app"
   labels_environment = "development"
   selector_app       = "my-app"
@@ -78,8 +77,7 @@ module "storage_deployment" {
   labels_provider    = "aws"
   replica_count      = 3
   container_name     = "storage-container"
-  image_repository   = "myrepo/storage"
-  image_tag          = "latest"
+  image_name         = "IMAGE_PLACEHOLDER"
   image_pull_policy  = "IfNotPresent"
   config_map_name    = "storage-configmap"
   secret_name        = "azure-storage-access-key"
@@ -125,13 +123,13 @@ output "streaming_service_name" {
 module "streaming_configmap" {
   source = "./terraform-modules/kubernetes/streaming/streaming-configmap"
 
-  configmap_name      = "streaming-configmap"
-  service_name        = "streaming"
-  port                = "8080"
-  video_storage_host  = "videostorage.local"
-  video_storage_port  = "4000"
-  db_host             = "database.local"
-  db_name             = "streamingdb"
+  configmap_name     = "streaming-configmap"
+  service_name       = "streaming"
+  port               = "8080"
+  video_storage_host = "videostorage.local"
+  video_storage_port = "4000"
+  db_host            = "database.local"
+  db_name            = "streamingdb"
 }
 
 output "streaming_configmap_name" {
@@ -141,18 +139,17 @@ output "streaming_configmap_name" {
 module "streaming_deployment" {
   source = "./terraform-modules/kubernetes/streaming/streaming-deployment"
 
-  deployment_name        = "streaming-deployment"
-  labels_app             = "mytube"
-  labels_environment     = "production"
-  labels_service         = "video-streaming"
-  replica_count          = 3
-  container_name         = "video-streaming-container"
-  image_repository       = "myrepo/video-streaming"
-  image_tag              = "v1.0.0"
-  image_pull_policy      = "IfNotPresent"
+  deployment_name         = "streaming-deployment"
+  labels_app              = "mytube"
+  labels_environment      = "production"
+  labels_service          = "video-streaming"
+  replica_count           = 3
+  container_name          = "video-streaming-container"
+  image_name              = "IMAGE_PLACEHOLDER"
+  image_pull_policy       = "IfNotPresent"
   resources_limits_memory = "512Mi"
-  resources_limits_cpu   = "500m"
-  container_port         = 8080
+  resources_limits_cpu    = "500m"
+  container_port          = 8080
 }
 
 output "streaming_deployment_name" {

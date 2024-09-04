@@ -23,13 +23,7 @@ variable "db_replica_count" {
   type        = number
 }
 
-variable "db_image_repository" {
-  description = "Docker image repository"
-  type        = string
-}
-
-variable "db_image_tag" {
-  description = "Docker image tag"
+variable "db_image_name" {
   type        = string
 }
 
