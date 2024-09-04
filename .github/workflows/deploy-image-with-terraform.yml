@@ -23,4 +23,5 @@ jobs:
           cd ./microservices/my-tube
           terraform init
           terraform refresh
-          terraform apply -auto-approve -var="image_name=${{ env.IMAGE_NAME }}"
+          terraform apply -auto-approve 
+        # -var="image_name=${{ env.IMAGE_NAME }}"
