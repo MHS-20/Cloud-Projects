@@ -3,6 +3,7 @@ name: Deploy to Kubernetes with Terraform
 on:
   repository_dispatch:
     types: [deploy]
+  workflow_dispatch:
 
 jobs:
   deploy:
