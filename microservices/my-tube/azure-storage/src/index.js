@@ -8,7 +8,7 @@ const {
 } = require("@azure/storage-blob");
 
 
-// Check Env Vars
+// Check Env Vars //
 if (!process.env.PORT) {
   throw new Error(
     "Please specify the port number for the HTTP server with the environment variable PORT."
