@@ -13,8 +13,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: List files in the working directory
+        run: ls -R
+
       - name: Navigate to Terraform directory
         run: cd ./microservices/my-tube/
+
+      - name: Check current dir
+        run: pwd
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
