@@ -1,13 +1,13 @@
 variable "resource_group_name" {
-  type        = string
+  type = string
 }
 
 variable "location" {
-  type        = string
+  type = string
 }
 
 variable "vnet_name" {
-  type        = string
+  type = string
 }
 
 variable "vnet_address_space" {
@@ -27,11 +27,11 @@ variable "private_subnet_prefixes" {
 }
 
 variable "public_subnet_names" {
-  type        = list(string)
-  default     = ["public-subnet-1", "public-subnet-2"]
+  type    = list(string)
+  default = ["public-subnet-1", "public-subnet-2"]
 }
 
 variable "private_subnet_names" {
-  type        = list(string)
-  default     = ["private-subnet-1", "private-subnet-2"]
+  type    = list(string)
+  default = ["private-subnet-1", "private-subnet-2"]
 }

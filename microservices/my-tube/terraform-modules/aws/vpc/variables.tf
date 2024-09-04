@@ -7,7 +7,7 @@ variable "name" {
 }
 
 variable "cidr" {
-  type        = string
+  type = string
 }
 
 variable "azs" {
@@ -26,6 +26,6 @@ variable "private_subnets" {
 }
 
 variable "enable_nat_gateway" {
-  type        = bool
-  default     = true
+  type    = bool
+  default = true
 }

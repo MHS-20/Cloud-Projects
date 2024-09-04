@@ -1,37 +1,37 @@
 variable "location" {
-  type        = string
+  type = string
 }
 
 variable "resource_group_name" {
-  type        = string
+  type = string
 }
 
 variable "resource_group_id" {
-  type        = string
+  type = string
 }
 
 variable "vnet_name" {
-  type        = string
+  type = string
 }
 
 variable "subnet_name" {
-  type        = string
+  type = string
 }
 
 variable "subnet_id" {
-  type        = string
+  type = string
 }
 
 variable "aks_cluster_name" {
-  type        = string
+  type = string
 }
 
 variable "node_count" {
-  type        = number
-  default     = 2
+  type    = number
+  default = 2
 }
 
 variable "node_vm_size" {
-  type        = string
-  default     = "Standard_B2s"
+  type    = string
+  default = "Standard_B2s"
 }
