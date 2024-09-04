@@ -13,10 +13,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Navigate to Terraform directory
+        run: cd MHS-20/MyProjects/microservices/my-tube
+
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
         with:
            cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+
   
       - name: Initialize Terraform
         run: terraform init
