@@ -5,6 +5,7 @@ on:
     paths:
       - 'MHS-20/MyProjects/microservices/my-tube/video-streaming'
       - 'MHS-20/MyProjects/microservices/my-tube/azure-storage'
+  workflow_dispatch:
 
 jobs:
   build-and-push:
