@@ -40,10 +40,8 @@ jobs:
       - name: Build and push Docker image
         # if: env.build == 'true'
         run: |
-          pwd
           cd ./microservices/my-tube/
-          pwd
-          IMAGE_TAG=${{ secrets.DOCKER_REPO_NAME }}/${{ matrix.image-dir }}:${{ github.sha }}
+          IMAGE_TAG=${{ secrets.DOCKER_REPO_NAME }}:${{ matrix.image-dir }}-${{ github.sha }}
           docker build -t $IMAGE_TAG ${{ matrix.image-dir }}
           docker push $IMAGE_TAG
                     
