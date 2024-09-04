@@ -3,8 +3,8 @@ name: Build and Push Docker Images
 on:
   push:
     paths:
-      - 'microservices/my-tube/video-streaming'
-      - 'microservices/my-tube/azure-storage'
+      - 'MHS-20/MyProjects/microservices/my-tube/video-streaming'
+      - 'MHS-20/MyProjects/microservices/my-tube/azure-storage'
 
 jobs:
   build-and-push:
@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         image-dir:
-          - 'vidoe-streaming'
+          - 'video-streaming'
           - 'azure-storage'
 
     steps:
