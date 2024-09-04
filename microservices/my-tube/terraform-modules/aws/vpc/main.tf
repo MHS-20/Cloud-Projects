@@ -54,7 +54,7 @@ resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
 
   route {
-    cidr_block = "0.0.0.0/0"  // all out traffic
+    cidr_block = "0.0.0.0/0"                 // all out traffic
     gateway_id = aws_internet_gateway.igw.id // IGW as destination
   }
 
@@ -95,10 +95,10 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
 
   route {
-    cidr_block     = "0.0.0.0/0" // all traffic
+    cidr_block     = "0.0.0.0/0"            // all traffic
     nat_gateway_id = aws_nat_gateway.nat.id // destionation
   }
-  
+
   tags = {
     Name = "${var.name}-private-rt"
   }
