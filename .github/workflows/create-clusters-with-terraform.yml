@@ -1,4 +1,4 @@
-name: Deploy to Kubernetes with Terraform
+name: Create clusters with terraform
 
 on:
   repository_dispatch:
