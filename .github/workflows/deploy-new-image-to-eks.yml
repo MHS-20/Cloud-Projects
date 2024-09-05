@@ -1,0 +1,44 @@
+name: Deploy Azure Storage to Clusters
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      image_name:
+        required: true
+        type: string
+      image_dir:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+## Kubeconfig file to deploy on AWS cluster ## 
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Fecth EKS kubeconfig file
+        run: | 
+          aws eks update-kubeconfig --name my-eks-cluster --kubeconfig kubeconfig-eks.yaml
+
+## Deploy Specific Service with Terraform ##
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+  
+      - name: Run Terraform
+        run: |
+          cd ./microservices/my-tube/${{ inputs.image_dir }}
+          terraform init
+          terraform refresh
+          terraform apply -auto-approve -var=${{ inputs.image_name }}
