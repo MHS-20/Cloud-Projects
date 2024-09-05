@@ -1,9 +1,15 @@
 name: Create clusters with terraform
 
 on:
-  repository_dispatch:
-    types: [deploy]
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      image_name:
+        required: true
+        type: string
+      image_dir:
+        required: true
+        type: string
 
 jobs:
   deploy:
@@ -24,3 +30,9 @@ jobs:
           terraform init
           terraform refresh
           terraform apply -auto-approve
+
+      - name: Call Service Deployment Workflow
+        uses: ./.github/workflows/build-${{ inputs.image-dir }}-image.yml
+        with:
+          image_name: ${{ inputs.image-name }}
+          image_dir: ${{ inputs.image-dir }}
