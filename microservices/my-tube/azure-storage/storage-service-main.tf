@@ -1,5 +1,5 @@
 provider "kubernetes" {
-  config_path = "~/.kube/config" # change mode 
+  config_path = "kubeconfig.yaml"
 }
 
 variable "image_name" {
@@ -7,7 +7,7 @@ variable "image_name" {
 }
 
 module "storage_service" {
-  source = "./terraform-modules/kubernetes/cloud-storage/storage-service"
+  source = "../terraform-modules/kubernetes/cloud-storage/storage-service"
 
   service_name       = "my-storage-service"
   service_type       = "ClusterIP"

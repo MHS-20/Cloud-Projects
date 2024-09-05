@@ -1,5 +1,5 @@
 provider "kubernetes" {
-  config_path = "~/.kube/config" # change mode 
+  config_path = "kubeconfig.yaml"
 }
 
 variable "image_name" {
@@ -7,7 +7,7 @@ variable "image_name" {
 }
 
 module "streaming_service" {
-  source = "./terraform-modules/kubernetes/streaming/streaming-service"
+  source = "../terraform-modules/kubernetes/streaming/streaming-service"
 
   service_name       = "streaming-service"
   service_type       = "ClusterIP"
