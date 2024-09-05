@@ -28,7 +28,7 @@ jobs:
 
       - name: Fecth EKS kubeconfig file
         run: | 
-          aws eks update-kubeconfig --name my-eks-cluster --kubeconfig kubeconfig-eks.yaml
+          aws eks update-kubeconfig --name my-eks-cluster --kubeconfig kubeconfig.yaml
 
 ## Deploy Specific Service with Terraform ##
       - name: Set up Terraform
