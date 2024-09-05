@@ -5,3 +5,4 @@ My_notes.md
 
 .terraform*
 terraform.tfstate*
+k8s-main.tf
