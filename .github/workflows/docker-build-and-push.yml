@@ -34,7 +34,7 @@ jobs:
       - name: Create clusters Workflow
         uses: ./.github/workflows/create-clusters-with-terraform.yml
         with:
-          image_name: ${{ secrets.DOCKER_USERNAME }}/my-app:${{ github.sha }}
+          image_name: ${{ secrets.DOCKER_REPO_NAME }}:${{ inputs.image-dir }}-${{ github.sha }}
           image_dir: ${{ inputs.image-dir }}
 
       # - name: Trigger deploy workflow
