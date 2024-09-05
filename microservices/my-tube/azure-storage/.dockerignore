@@ -2,3 +2,4 @@
 .github
 .env
 node_modules
+*.tf

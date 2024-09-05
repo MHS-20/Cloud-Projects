@@ -2,6 +2,10 @@ provider "kubernetes" {
   config_path = "~/.kube/config" # change mode 
 }
 
+variable "image_name" {
+  type = string
+}
+
 module "db_service" {
   source = "./terraform-modules/kubernetes/db/db-service"
 
@@ -77,7 +81,7 @@ module "storage_deployment" {
   labels_provider    = "aws"
   replica_count      = 3
   container_name     = "storage-container"
-  image_name         = "IMAGE_PLACEHOLDER"
+  image_name         = var.image_name
   image_pull_policy  = "IfNotPresent"
   config_map_name    = "storage-configmap"
   secret_name        = "azure-storage-access-key"
