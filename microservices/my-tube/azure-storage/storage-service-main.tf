@@ -1,5 +1,5 @@
 provider "kubernetes" {
-  config_path = "kubeconfig.yaml"
+  config_path = "${env.KUBECONFIG}"
 }
 
 variable "image_name" {

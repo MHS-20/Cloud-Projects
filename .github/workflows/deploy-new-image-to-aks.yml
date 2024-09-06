@@ -15,13 +15,18 @@ jobs:
 
       ## Kubeconfig file to deploy on Azure cluster ##
       - name: Set up Azure CLI
-        uses: azure/setup-azure@v1
+        uses: azure/login@v1
         with:
-          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }} # create service principal
 
       - name: Fecth AKS kubeconfig file
         run: |
-          az aks get-credentials --resource-group aks-rg --name my-aks-cluster --file kubeconfig.yaml
+          az aks get-credentials --resource-group aks-rg --name my-aks-cluster --file $GITHUB_WORKSPACE/kubeconfig.yaml
+
+      ## Set environment variable for kubeconfig ##
+      - name: Set KUBECONFIG environment variable
+        run: |
+          echo "KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig.yaml" >> $GITHUB_ENV
 
       ## Deploy Specific Service with Terraform ##
       - name: Set up Terraform
