@@ -3,7 +3,7 @@ name: Build and Push Image for Azure Storage Service
 on:
   push:
     paths:
-      - 'MHS-20/MyProjects/microservices/my-tube/azure-storage'
+      - "MHS-20/MyProjects/microservices/my-tube/azure-storage"
   workflow_dispatch:
 
 jobs:
@@ -11,14 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-    
-      - name: Call reusable workflow
-        uses: ./.github/workflows/docker-build-and-push.yml
-        with:
-          image-dir: 'azure-streaming'
-
       - name: Trigger next workflow with inputs
         run: |
           curl -X POST \

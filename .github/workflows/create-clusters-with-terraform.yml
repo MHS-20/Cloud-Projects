@@ -1,15 +1,8 @@
 name: Create clusters with terraform
 
 on:
-  workflow_dispatch:
-  workflow_call:
-    inputs:
-      image_name:
-        required: true
-        type: string
-      image_dir:
-        required: true
-        type: string
+  repository_dispatch:
+    types: [trigger_clusters_creation]
 
 jobs:
   deploy:
@@ -22,8 +15,8 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-  
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
       - name: Run Terraform
         run: |
           cd ./microservices/my-tube
@@ -31,8 +24,16 @@ jobs:
           terraform refresh
           terraform apply -auto-approve
 
-      - name: Call Service Deployment Workflow
-        uses: ./.github/workflows/build-${{ inputs.image-dir }}-image.yml
-        with:
-          image_name: ${{ inputs.image-name }}
-          image_dir: ${{ inputs.image-dir }}
+      - name: Trigger next workflow with inputs
+        run: |
+          curl -X POST \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/dispatches \
+          -d '{
+            "event_type": "trigger_deployment",
+            "client_payload": {
+              image_name: ${{ github.event.client_payload.image_name }},
+              image_dir: ${{ github.event.client_payload.image_dir }}
+            }
+          }'
