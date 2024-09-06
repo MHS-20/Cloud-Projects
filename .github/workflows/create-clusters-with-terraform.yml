@@ -28,7 +28,7 @@ jobs:
           terraform refresh
           terraform apply -auto-approve
 
-      - name: Trigger next workflow
+      - name: Trigger create secrets workflow
         run: |
           curl -X POST \
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
@@ -39,7 +39,7 @@ jobs:
             "client_payload": { }
           }'
 
-      - name: Trigger next workflow with inputs
+      - name: Trigger deploy images workflow
         run: |
           curl -X POST \
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
