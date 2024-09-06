@@ -40,4 +40,4 @@ jobs:
           cd ./microservices/my-tube/${{ github.event.client_payload.image_dir }}
           terraform init
           terraform refresh
-          terraform apply -auto-approve -var=${{ github.event.client_payload.image_name }}
+          terraform apply -auto-approve -var="IMAGE_NAME=${{ github.event.client_payload.image_name }}"
