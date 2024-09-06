@@ -6,6 +6,10 @@ on:
       - 'MHS-20/MyProjects/microservices/my-tube/video-streaming'
   workflow_dispatch:
 
+permissions:
+  contents: write
+  actions: write    
+
 jobs:
   call-build-and-push:
     runs-on: ubuntu-latest
