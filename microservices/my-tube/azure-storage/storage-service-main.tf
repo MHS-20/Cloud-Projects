@@ -1,6 +1,10 @@
 provider "kubernetes" {
-  config_path = "${env.KUBECONFIG}"
+  config_path = env("KUBECONFIG") # github actions env var
 }
+
+# provider "kubernetes" {
+#   config_path = "~/.kube/config"
+# }
 
 variable "image_name" {
   type = string
