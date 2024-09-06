@@ -42,7 +42,7 @@ jobs:
           pwd
           
           echo "image name: ${{ github.event.client_payload.image_name }}"
-          ls -l ~/.kube/
+          cat ~/.kube/config
           
           terraform init
           terraform refresh
