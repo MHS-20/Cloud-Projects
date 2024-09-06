@@ -41,7 +41,7 @@ jobs:
           -d '{
             "event_type": "trigger_clusters_creation",
             "client_payload": {
-              "image_dir": "azure-streaming",
+              "image_dir": "${{ github.event.client_payload.image_dir }}",
               "image_name": "${{ secrets.DOCKER_REPO_NAME }}:${{ github.event.client_payload.image_dir }}-${{ github.sha }}"
             }
           }'
