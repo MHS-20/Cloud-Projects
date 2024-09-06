@@ -22,12 +22,12 @@ jobs:
 
       - name: Fecth EKS kubeconfig file
         run: |
-          aws eks update-kubeconfig --name my-eks-cluster --kubeconfig $GITHUB_WORKSPACE/kubeconfig.yaml
+          aws eks update-kubeconfig --name my-eks-cluster --kubeconfig ~/.kube/config
 
       ## Set environment variable for kubeconfig ##
-      - name: Set KUBECONFIG environment variable
-        run: |
-          echo "KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig.yaml" >> $GITHUB_ENV
+      # - name: Set KUBECONFIG environment variable
+      #   run: |
+      #     echo "KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig.yaml" >> $GITHUB_ENV
 
       ## Deploy Specific Service with Terraform ##
       - name: Set up Terraform
