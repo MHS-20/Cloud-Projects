@@ -4,6 +4,10 @@ on:
   repository_dispatch:
     types: [trigger_docker_build]
 
+permissions:
+  contents: write  
+  actions: write
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
