@@ -6,6 +6,10 @@ on:
       - "MHS-20/MyProjects/microservices/my-tube/azure-storage"
   workflow_dispatch:
 
+permissions:
+  contents: write  
+  actions: write     
+
 jobs:
   call-build-and-push:
     runs-on: ubuntu-latest
@@ -14,7 +18,7 @@ jobs:
       - name: Trigger next workflow with inputs
         run: |
           curl -X POST \
-          -H "Authorization: token ${{ secrets.WORKFLOWS_TOKEN }}" \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/${{ github.repository }}/dispatches \
           -d '{
