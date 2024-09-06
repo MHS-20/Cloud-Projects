@@ -4,6 +4,10 @@ on:
   repository_dispatch:
     types: [trigger_clusters_creation]
 
+permissions:
+  contents: write  
+  actions: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
