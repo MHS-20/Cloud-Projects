@@ -1,11 +1,8 @@
 name: Build and Push Docker Image
 
 on:
-  workflow_call:
-    inputs:
-      image-dir:
-        required: true
-        type: string
+  repository_dispatch:
+    types: [trigger_docker_build]
 
 jobs:
   build-and-push:
@@ -27,7 +24,7 @@ jobs:
       - name: Build and push Docker image
         run: |
           cd ./microservices/my-tube/
-          IMAGE_TAG=${{ secrets.DOCKER_REPO_NAME }}:${{ inputs.image-dir }}-${{ github.sha }}
+          IMAGE_TAG=${{ secrets.DOCKER_REPO_NAME }}:${{ github.event.client_payload.image_dir }}-${{ github.sha }}
           docker build -t $IMAGE_TAG ${{ inputs.image-dir }}
           docker push $IMAGE_TAG
 
