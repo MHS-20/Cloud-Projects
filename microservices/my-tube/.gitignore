@@ -5,5 +5,7 @@ My_notes.md
 
 .terraform*
 terraform.tfstate*
+.load-balancer-main.tf
+.load-balancer-main.tf
 k8s-main.tf
 .k8s-main.tf
