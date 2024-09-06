@@ -25,7 +25,7 @@ jobs:
         run: |
           cd ./microservices/my-tube/
           IMAGE_TAG=${{ secrets.DOCKER_REPO_NAME }}:${{ github.event.client_payload.image_dir }}-${{ github.sha }}
-          docker build -t $IMAGE_TAG ${{ github.event.client_payload.image_dir }}
+          docker build -t $IMAGE_TAG ./${{ github.event.client_payload.image_dir }}
           docker push $IMAGE_TAG
 
       - name: Trigger next workflow with inputs
