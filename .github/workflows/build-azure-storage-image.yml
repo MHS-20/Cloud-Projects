@@ -12,6 +12,6 @@ jobs:
 
     steps:
       - name: Call reusable workflow
-        uses: ./.github/workflows/build-and-push.yml
+        uses: ./.github/workflows/docker-build-and-push.yml
         with:
           image-dir: 'azure-streaming'
