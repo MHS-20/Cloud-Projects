@@ -1,4 +1,4 @@
-name: Deploy Azure Storage to Clusters
+name: Deploy New Image to EKS
 
 on:
   workflow_dispatch:
