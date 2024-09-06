@@ -2,6 +2,17 @@ provider "kubernetes" {
   config_path = "kubeconfig.yaml"
 }
 
+terraform { 
+  cloud { 
+    
+    organization = "Sentinel27-Org" 
+
+    workspaces { 
+      name = "video-streaming-state" 
+    } 
+  } 
+}
+
 variable "image_name" {
   type = string
 }

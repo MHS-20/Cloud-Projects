@@ -4,7 +4,7 @@ terraform {
     organization = "Sentinel27-Org"
 
     workspaces {
-      name = "devops-summer-project"
+      name = "main-clusters"
     }
   }
 }

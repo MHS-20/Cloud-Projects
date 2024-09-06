@@ -1,6 +1,14 @@
-# provider "kubernetes" {
-#   config_path = env("KUBECONFIG") # github actions  
-# }
+terraform {
+  cloud {
+
+    organization = "Sentinel27-Org"
+
+    workspaces {
+      name = "azure-storage-state"
+    }
+  }
+}
+
 
 provider "kubernetes" {
   config_path = "~/.kube/config"
