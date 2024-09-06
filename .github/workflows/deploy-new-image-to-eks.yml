@@ -40,6 +40,7 @@ jobs:
           cd ./microservices/my-tube/${{ github.event.client_payload.image_dir }}
           pwd
           ls
+          echo "${env.KUBECONFIG}"
           terraform init
           terraform refresh
           terraform apply -auto-approve -var="image_name=${{ github.event.client_payload.image_name }}"
