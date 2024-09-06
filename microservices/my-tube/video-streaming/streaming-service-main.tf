@@ -24,7 +24,7 @@ output "streaming_service_name" {
 }
 
 module "streaming_configmap" {
-  source = "./terraform-modules/kubernetes/streaming/streaming-configmap"
+  source = "../terraform-modules/kubernetes/streaming/streaming-configmap"
 
   configmap_name     = "streaming-configmap"
   service_name       = "streaming"
@@ -40,7 +40,7 @@ output "streaming_configmap_name" {
 }
 
 module "streaming_deployment" {
-  source = "./terraform-modules/kubernetes/streaming/streaming-deployment"
+  source = "../terraform-modules/kubernetes/streaming/streaming-deployment"
 
   deployment_name         = "streaming-deployment"
   labels_app              = "mytube"

@@ -7,7 +7,7 @@ variable "image_name" {
 }
 
 module "db_service" {
-  source = "./terraform-modules/kubernetes/db/db-service"
+  source = "../terraform-modules/kubernetes/db/db-service"
 
   db_ip_name               = "my-db-service"
   db_ip_labels_app         = "my-app"
@@ -23,7 +23,7 @@ output "db_service_name" {
 }
 
 module "db_deployment" {
-  source = "./terraform-modules/kubernetes/db/db-deployment"
+  source = "../terraform-modules/kubernetes/db/db-deployment"
 
   db_service_name       = "my-db-deployment"
   db_labels_app         = "my-app"
