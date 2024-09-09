@@ -48,7 +48,6 @@ jobs:
           -d '{
             "event_type": "trigger_deployment",
             "client_payload": {
-              "image_name": "${{ github.event.client_payload.image_name }}",
-              "image_dir": "${{ github.event.client_payload.image_dir }}"
+              "placeholder": "${{ github.event.client_payload.placeholder }}"
             }
           }'
