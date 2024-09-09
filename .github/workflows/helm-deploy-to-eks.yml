@@ -31,7 +31,7 @@ jobs:
     - name: Deploy Helm Chart
       run: |
         pwd
-        cd .microservices/my-tube
+        cd ./microservices/my-tube
         helm upgrade --install testing ./chart/Chart.yaml \
           --namespace default \
           --wait
