@@ -28,6 +28,10 @@ jobs:
       run: |
         curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
+    - name: Replace image tag in Helm values.yaml
+      run: |
+          sed -i "s/${{ github.event.client_payload.placeholder }}/${IMAGE_TAG}/" microservices/my-tube/chart/values.yaml
+
     - name: Deploy Helm Chart
       run: |
         pwd
