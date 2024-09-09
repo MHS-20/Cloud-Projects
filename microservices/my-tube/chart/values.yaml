@@ -4,8 +4,8 @@ streaming:
   replicaCount: 1
 
   image:
-    repository: mhs20/mytube
-    tag: video-streaming-010
+    repository: mhs20/mytube-video-streaming
+    tag: latest
     pullPolicy: IfNotPresent
 
   resources:
@@ -47,8 +47,8 @@ storage:
   replicaCount: 1
 
   image:
-    repository: mhs20/mytube
-    tag: azure-storage-010
+    repository: mhs20/mytube-azure-storage
+    tag: latest
     pullPolicy: IfNotPresent
 
   resources:
@@ -87,8 +87,8 @@ db:
   replicaCount: 1
 
   image:
-    repository: mhs20/mytube
-    tag: mytube-db-010
+    repository: mhs20/mytube-db
+    tag: latest
     pullPolicy: IfNotPresent
 
   resources:
