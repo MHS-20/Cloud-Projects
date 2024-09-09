@@ -42,6 +42,6 @@ jobs:
             "event_type": "trigger_clusters_creation",
             "client_payload": {
               "image_dir": "${{ github.event.client_payload.image_dir }}",
-              "placeholder": "${{ github.event.client_payload.placeholder }}",
+              "placeholder": "${{ github.event.client_payload.placeholder }}"
               }
           }'
