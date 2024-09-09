@@ -12,6 +12,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
       ## Kubeconfig file to deploy on AWS cluster ##
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v2
@@ -30,19 +35,9 @@ jobs:
       #     echo "KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig.yaml" >> $GITHUB_ENV
 
       ## Deploy Specific Service with Terraform ##
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
       - name: Run Terraform
         run: |
-          pwd
-          ls -R ./microservices/my-tube/
           cd ./microservices/my-tube/${{ github.event.client_payload.image_dir }}
-          
-          echo "image name: ${{ github.event.client_payload.image_name }}"
-          cat ~/.kube/config
           
           terraform init
           terraform refresh
