@@ -2,8 +2,8 @@ name: Deploy New Image to EKS
 
 on:
   workflow_dispatch:
-  repository_dispatch:
-    types: [trigger_deployment]
+  # repository_dispatch:
+  #   types: [trigger_deployment]
 jobs:
   deploy:
     runs-on: ubuntu-latest
