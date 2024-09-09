@@ -28,7 +28,7 @@ jobs:
       - name: Build and push Docker image
         run: |
           cd ./microservices/my-tube/
-          IMAGE_TAG=${{ github.event.client_payload.docker_repo }}:latest
+          IMAGE_TAG=${{ github.event.client_payload.docker_repo }}:{{ github.sha }}
           docker build -t $IMAGE_TAG ./${{ github.event.client_payload.image_dir }}
           docker push $IMAGE_TAG
 
@@ -41,6 +41,7 @@ jobs:
           -d '{
             "event_type": "trigger_clusters_creation",
             "client_payload": {
-              "image_dir": "${{ github.event.client_payload.image_dir }}"            
+              "image_dir": "${{ github.event.client_payload.image_dir }}",
+              "placeholder": "${{ github.event.client_payload.placeholder }}",
               }
           }'
