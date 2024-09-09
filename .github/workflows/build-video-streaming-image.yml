@@ -25,6 +25,7 @@ jobs:
           -d '{
             "event_type": "trigger_docker_build",
             "client_payload": {
-              "image_dir": "video-streaming"
+              "image_dir": "video-streaming", 
+              "docker_repo": "mhs20/mytube-video-streaming"
             }
           }'
