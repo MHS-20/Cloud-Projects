@@ -38,7 +38,7 @@ jobs:
       - name: Run Terraform
         run: |
           cd ./microservices/my-tube/${{ github.event.client_payload.image_dir }}
-          echo "IMAGE_NAME=${{ github.event.client_payload.image_name }}" >> $GITHUB_ENV
+          pwd
           
           terraform init
           terraform refresh
