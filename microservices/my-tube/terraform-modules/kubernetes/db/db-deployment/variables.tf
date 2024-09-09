@@ -24,7 +24,7 @@ variable "db_replica_count" {
 }
 
 variable "db_image_name" {
-  type        = string
+  type = string
 }
 
 variable "db_image_pull_policy" {

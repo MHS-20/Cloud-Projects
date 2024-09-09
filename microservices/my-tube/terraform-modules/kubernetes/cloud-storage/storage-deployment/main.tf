@@ -34,7 +34,7 @@ resource "kubernetes_deployment" "storage_deployment" {
 
         container {
           name              = var.container_name
-          image             = "${var.image_name}"
+          image             = var.image_name
           image_pull_policy = var.image_pull_policy
 
           env {

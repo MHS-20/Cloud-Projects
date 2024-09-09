@@ -7,10 +7,10 @@ resource "kubernetes_config_map" "streaming_configmap" {
   }
 
   data = {
-    PORT                 = var.port
-    VIDEO_STORAGE_HOST   = var.video_storage_host
-    VIDEO_STORAGE_PORT   = var.video_storage_port
-    DBHOST               = var.db_host
-    DBNAME               = var.db_name
+    PORT               = var.port
+    VIDEO_STORAGE_HOST = var.video_storage_host
+    VIDEO_STORAGE_PORT = var.video_storage_port
+    DBHOST             = var.db_host
+    DBNAME             = var.db_name
   }
 }
