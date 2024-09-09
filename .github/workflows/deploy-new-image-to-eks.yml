@@ -38,7 +38,7 @@ jobs:
       - name: Run Terraform
         run: |
           pwd
-          ls -lr ./microservices/my-tube/
+          ls -R ./microservices/my-tube/
           cd ./microservices/my-tube/${{ github.event.client_payload.image_dir }}
           
           echo "image name: ${{ github.event.client_payload.image_name }}"
