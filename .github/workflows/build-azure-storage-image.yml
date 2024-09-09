@@ -25,6 +25,7 @@ jobs:
             "event_type": "trigger_docker_build",
             "client_payload": {
               "image_dir": "azure-storage",
-              "docker_repo": "mhs20/mytube-azure-storage"
+              "docker_repo": "mhs20/mytube-azure-storage",
+              "placeholder": "STORAGE_TAG_PLACEHOLDER"
               }
           }'
