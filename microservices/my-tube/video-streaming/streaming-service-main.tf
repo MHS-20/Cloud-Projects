@@ -18,7 +18,7 @@ variable "image_name" {
 }
 
 module "streaming_service" {
-  source = "../terraform-modules/kubernetes/streaming/streaming-service"
+  source = "./streaming-modules/streaming-service"
 
   service_name       = "streaming-service"
   service_type       = "ClusterIP"
@@ -35,7 +35,7 @@ output "streaming_service_name" {
 }
 
 module "streaming_configmap" {
-  source = "../terraform-modules/kubernetes/streaming/streaming-configmap"
+  source = "./streaming-modules/streaming-configmap"
 
   configmap_name     = "streaming-configmap"
   service_name       = "streaming"
@@ -51,7 +51,7 @@ output "streaming_configmap_name" {
 }
 
 module "streaming_deployment" {
-  source = "../terraform-modules/kubernetes/streaming/streaming-deployment"
+  source = "./streaming-modules/streaming-deployment"
 
   deployment_name         = "streaming-deployment"
   labels_app              = "mytube"
