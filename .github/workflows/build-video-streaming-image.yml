@@ -25,7 +25,6 @@ jobs:
           -d '{
             "event_type": "trigger_docker_build",
             "client_payload": {
-              "image_dir": "video-streaming", 
-              "artifact_name": "streaming"
+              "image_dir": "video-streaming"
             }
           }'
