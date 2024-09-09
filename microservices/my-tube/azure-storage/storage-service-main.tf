@@ -31,7 +31,7 @@ variable "image_name" {
 }
 
 module "storage_service" {
-  source = "../terraform-modules/kubernetes/cloud-storage/storage-service"
+  source = "./terraform-modules/kubernetes/cloud-storage/storage-service"
 
   service_name       = "my-storage-service"
   service_type       = "ClusterIP"
@@ -48,7 +48,7 @@ output "storage_service_name" {
 }
 
 module "storage_deployment" {
-  source = "../terraform-modules/kubernetes/cloud-storage/storage-deployment"
+  source = "./terraform-modules/kubernetes/cloud-storage/storage-deployment"
 
   service_name       = "my-storage-deployment"
   labels_app         = "my-app"
@@ -71,7 +71,7 @@ output "storage_deployment_name" {
 }
 
 module "storage_configmap" {
-  source = "../terraform-modules/kubernetes/cloud-storage/storage-configmap"
+  source = "./terraform-modules/kubernetes/cloud-storage/storage-configmap"
 
   configmap_name       = "storage-configmap"
   service_name         = "storage"
