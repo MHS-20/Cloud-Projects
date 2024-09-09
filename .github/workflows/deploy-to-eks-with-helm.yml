@@ -28,9 +28,18 @@ jobs:
       run: |
         curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
+    - name: Read image names
+      id: read-images
+      run: |
+          streaming_image=$(cat streaming_image.txt)
+          storage_image=$(cat storage_image.txt)
+          echo "::set-output name=streaming_image::$streaming_image"
+          echo "::set-output name=storage_image::$storage_image"
+
     - name: Deploy Helm Chart
       run: |
         helm upgrade --install testing ./charts/Chart.yaml \
-          --set image.tag=${{ github.sha }} \
+          --set streaming.image.tag=${{ steps.read-images.outputs.streaming_image }} \
+          --set storage.image.tag=${{ steps.read-images.outputs.strorage_image }} \
           --namespace default \
           --wait
