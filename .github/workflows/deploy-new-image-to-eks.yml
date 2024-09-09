@@ -38,8 +38,10 @@ jobs:
       - name: Run Terraform
         run: |
           pwd
+          ls -la
           cd ./microservices/my-tube/${{ github.event.client_payload.image_dir }}
           pwd
+          ls -la
           
           echo "image name: ${{ github.event.client_payload.image_name }}"
           cat ~/.kube/config
