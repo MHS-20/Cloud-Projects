@@ -24,6 +24,7 @@ jobs:
           -d '{
             "event_type": "trigger_docker_build",
             "client_payload": {
-              "image_dir": "azure-storage"
+              "image_dir": "azure-storage", 
+              "artifact_name": "storage"
             }
           }'
