@@ -30,6 +30,6 @@ jobs:
 
     - name: Deploy Helm Chart
       run: |
-        helm upgrade --install testing ./charts/Chart.yaml \
+        helm upgrade --install testing ./chart/Chart.yaml \
           --namespace default \
           --wait
