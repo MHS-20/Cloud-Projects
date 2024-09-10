@@ -32,6 +32,25 @@ jobs:
           docker build -t $IMAGE_TAG ./${{ github.event.client_payload.image_dir }}
           docker push $IMAGE_TAG
 
+      - name: Run Docker Scout scan
+        run: |
+          docker scout cves ${{ secrets.DOCKER_USERNAME }}/my-app:${{ github.sha }} > scout_report.txt || exit 0
+
+    # - name: Upload Docker Scout report
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: scout-report
+    #     path: scout_report.txt
+
+      - name: Check Docker Scout results
+        id: check_scout
+        run: |
+          if grep -q "Critical" scout_report.txt; then
+            echo "Vulnerabilities found! Aborting deployment."
+          else
+            echo "No critical vulnerabilities found."
+          fi
+
       - name: Trigger next workflow with inputs
         run: |
           curl -X POST \
