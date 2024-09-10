@@ -28,7 +28,7 @@ jobs:
       - name: Build and push Docker image
         run: |
           cd ./microservices/my-tube/
-          IMAGE_TAG=${{ github.event.client_payload.docker_repo }}:{{ github.sha }}
+          IMAGE_TAG=${{ github.event.client_payload.docker_repo }}:${{ github.sha }}
           docker build -t $IMAGE_TAG ./${{ github.event.client_payload.image_dir }}
           docker push $IMAGE_TAG
 
