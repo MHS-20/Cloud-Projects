@@ -51,11 +51,19 @@ jobs:
       - name: Check Docker Scout results
         id: check_scout
         run: |
-          if grep -q "Critical" scout_report.txt; then
-            echo "Vulnerabilities found! Aborting deployment."
+          cat scout_report.txt
+          LINE=$(grep "vulnerabilities" "scout_report.txt")
+
+          C=$(echo "$VULN_LINE" | awk '{print $2}')
+          H=$(echo "$VULN_LINE" | awk '{print $3}')
+
+          if [[ "$C" -eq 0 && "$H" -eq 0 ]]; then
+            echo "No critical or high vulnerabilities found. Proceeding with deployment."
+            exit 0
           else
-            echo "No critical vulnerabilities found."
-          fi
+            echo "Critical or high vulnerabilities found. Aborting deployment."
+            exit 1
+          fi  
 
       - name: Trigger next workflow with inputs
         run: |
