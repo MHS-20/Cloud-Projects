@@ -28,11 +28,18 @@ jobs:
       run: |
         curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
-    - name: Replace image tag in Helm values.yaml
+    - name: Replace images tag in Helm values.yaml
       run: |
-          IMAGE_TAG=${{ github.sha }}
-          PLACEHOLDER=${{ github.event.client_payload.placeholder }}
-          sed -i "s/$PLACEHOLDER/$IMAGE_TAG/g" ./microservices/my-tube/chart/values.yaml
+
+          ## Retrive latest tags
+          STORAGE_TAG=$(curl -s "https://hub.docker.com/v2/repositories/mhs20/mytube-azure-storage/tags/?page_size=1" | jq -r '.results[0].name')
+          STREAMING_TAG=$(curl -s "https://hub.docker.com/v2/repositories/mhs20/mytube-video-streaming/tags/?page_size=1" | jq -r '.results[0].name')
+          DB_TAG=$(curl -s "https://hub.docker.com/v2/repositories/mhs20/mytube-db/tags/?page_size=1" | jq -r '.results[0].name')
+
+          ## Substitue placeholder tags
+          sed -i "s/STORAGE_TAG_PLACEHOLDER/$STORAGE_TAG/g" ./microservices/my-tube/chart/values.yaml
+          sed -i "s/STREAMING_TAG_PLACEHOLDER/$STREAMING_TAG/g" ./microservices/my-tube/chart/values.yaml
+          sed -i "s/DB_TAG_PLACEHOLDER/$DB_TAG/g" ./microservices/my-tube/chart/values.yaml
 
     - name: Deploy Helm Chart
       run: |
