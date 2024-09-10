@@ -30,7 +30,9 @@ jobs:
 
     - name: Replace image tag in Helm values.yaml
       run: |
-          sed -i "s/${{ github.event.client_payload.placeholder }}/${IMAGE_TAG}/" ./microservices/my-tube/chart/values.yaml
+          IMAGE_TAG=${{ github.sha }}
+          PLACEHOLDER=${{ github.event.client_payload.placeholder }}
+          sed -i "s/$PLACEHOLDER/$IMAGE_TAG/g" ./microservices/my-tube/chart/values.yaml
 
     - name: Deploy Helm Chart
       run: |
