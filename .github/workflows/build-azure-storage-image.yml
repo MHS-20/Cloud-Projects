@@ -26,6 +26,7 @@ jobs:
             "client_payload": {
               "image_dir": "azure-storage",
               "docker_repo": "mhs20/mytube-azure-storage",
-              "placeholder": "STORAGE_TAG_PLACEHOLDER"
+              "placeholder": "STORAGE_TAG_PLACEHOLDER", 
+              "env_var": "STORAGE_IMAGE"
               }
           }'
