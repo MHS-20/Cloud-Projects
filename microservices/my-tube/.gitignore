@@ -13,3 +13,6 @@ load-balancer-main.tf
 
 k8s-main.tf
 .k8s-main.tf
+
+vault/tls/*
+vault/unseal.key

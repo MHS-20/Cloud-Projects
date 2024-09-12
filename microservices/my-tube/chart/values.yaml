@@ -5,7 +5,7 @@ streaming:
 
   image:
     repository: mhs20/mytube-video-streaming
-    tag: STREAMING_TAG_PLACEHOLDER
+    tag: v5 # STREAMING_TAG_PLACEHOLDER
     pullPolicy: IfNotPresent
 
   resources:
@@ -48,7 +48,7 @@ storage:
 
   image:
     repository: mhs20/mytube-azure-storage
-    tag: STORAGE_TAG_PLACEHOLDER
+    tag: v4 # STORAGE_TAG_PLACEHOLDER
     pullPolicy: IfNotPresent
 
   resources:
@@ -88,7 +88,7 @@ db:
 
   image:
     repository: mhs20/mytube-db
-    tag: DB_TAG_PLACEHOLDER
+    tag: v1 #DB_TAG_PLACEHOLDER
     pullPolicy: IfNotPresent
 
   resources:
