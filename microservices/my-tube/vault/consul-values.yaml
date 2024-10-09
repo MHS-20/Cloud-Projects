@@ -1,5 +1,5 @@
 global:
-  datacenter: vault-kubernetes-guide
+  datacenter: mytube
 
 client:
   enabled: true

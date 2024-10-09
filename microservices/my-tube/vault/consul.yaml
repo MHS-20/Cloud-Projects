@@ -371,7 +371,7 @@ spec:
                 -hcl='leave_on_terminate = true' \
                 -hcl='ports { grpc = 8502 }' \
                 -config-dir=/consul/config \
-                -datacenter=vault-kubernetes-guide \
+                -datacenter=mytube \
                 -data-dir=/consul/data \
                 -retry-join="${CONSUL_FULLNAME}-server-0.${CONSUL_FULLNAME}-server.${NAMESPACE}.svc:8301" \
                 -config-file=/consul/extra-config/extra-from-values.json \
@@ -517,7 +517,7 @@ spec:
                 -bootstrap-expect=1 \
                 -client=0.0.0.0 \
                 -config-dir=/consul/config \
-                -datacenter=vault-kubernetes-guide \
+                -datacenter=mytube \
                 -data-dir=/consul/data \
                 -domain=consul \
                 -hcl="connect { enabled = true }" \
