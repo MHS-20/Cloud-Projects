@@ -1,0 +1,8 @@
+# [mongodb[+srv]://][user:pass@]host1[:port1][,host2[:port2],...][/database][?options]
+mongodb:
+  uri: "mongodb://mytube:secretpassword@mytube-db:4000"
+
+serviceMonitor:
+  additionalLabels:
+    release: prometheus
+# helm show values prometheus-community/prometheus-mongodb-exporter > prometheus-mongodb-exporter-values.yml

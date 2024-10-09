@@ -1,5 +1,5 @@
-apiVersion: v2 
-name: video-streaming-chart 
+apiVersion: v2
+name: video-streaming-chart
 version: 0.1.0
 type: application
 
@@ -11,12 +11,6 @@ keywords:
   - streaming
   - video
   - mytube
-
-# # Dipendenze del chart
-# dependencies:
-#   - name: mariadb
-#     version: 9.3.0
-#     repository: https://charts.bitnami.com/bitnami
 
 # license: Apache-2.0
 home: https://example.com
