@@ -1,0 +1,17 @@
+backend:
+  type: es
+  es:
+    host: "elasticsearch-logging"
+    port: 9200
+
+input:
+  tail:
+    path: /var/log/containers/*.log
+    parser: docker
+    docker_mode: true
+    tag: kube.*
+
+filters:
+  kubernetes:
+    match: kube.*
+    in_cluster: true
