@@ -18,8 +18,14 @@ spec:
       labels:
         app: {{ .Values.db.labels.app }}
         service: {{ .Values.db.labels.service }}
+      annotations: 
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/tls-skip-verify: "true"
+        vault.hashicorp.com/agent-inject-secret-mongodb: "secret/basic-secret/mongodb"
+        vault.hashicorp.com/role: "basic-secret-role"
 
     spec:
+      serviceAccountName: basic-secret
       imagePullSecrets:
         - name: docker-registry-secret
       containers:
@@ -34,23 +40,6 @@ spec:
               value: "secretpassword"
             - name: MONGO_INITDB_DATABASE
               value: "mydb"
-
-          # env:
-          #   - name: MONGO_INITDB_ROOT_USERNAME
-          #     valueFrom:
-          #       configMapKeyRef:
-          #         name: db-configmap
-          #         key: PORT
-          #   - name: STORAGE_ACCOUNT_NAME
-          #     valueFrom:
-          #       configMapKeyRef:
-          #         name: storage-configmap
-          #         key: STORAGE_ACCOUNT_NAME
-          #   - name: STORAGE_ACCESS_KEY
-          #     valueFrom:
-          #       secretKeyRef:
-          #         name: azure-storage-access-key
-          #         key: STORAGE_ACCESS_KEY
 
           ports:
             - containerPort: {{ .Values.db.service.port }}

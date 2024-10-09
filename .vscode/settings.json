@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "kubernetes://schema/policy/v1beta1@poddisruptionbudget+v1@serviceaccount+v1@serviceaccount+v1@configmap+rbac.authorization.k8s.io/v1@clusterrole+rbac.authorization.k8s.io/v1@clusterrolebinding+rbac.authorization.k8s.io/v1@clusterrolebinding+rbac.authorization.k8s.io/v1@role+rbac.authorization.k8s.io/v1@rolebinding+v1@service+v1@service+v1@service+v1@service+v1@service+v1@service+apps/v1@deployment+apps/v1@statefulset+v1@pod": "file:///home/sentinel/Documents/MyProjects/microservices/my-tube/vault/vault.yaml"
+    }
+}

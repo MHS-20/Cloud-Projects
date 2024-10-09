@@ -18,6 +18,11 @@ spec:
       labels:
         app: {{ .Values.streaming.labels.app }}
         service: {{ .Values.streaming.labels.service }}
+      annotations: 
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/tls-skip-verify: "true"
+        vault.hashicorp.com/agent-inject-secret-mongodb: "secret/basic-secret/mongodb"
+        vault.hashicorp.com/role: "basic-secret-role"
 
     spec:
       imagePullSecrets:
