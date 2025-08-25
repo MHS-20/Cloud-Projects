@@ -1,6 +1,0 @@
----
-- name: Disattiva allow-hotplug
-  replace:
-    path: /etc/network/interfaces
-    regexp: '^allow-hotplug'
-    replace: 'auto'
